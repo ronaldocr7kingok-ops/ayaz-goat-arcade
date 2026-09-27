@@ -3,165 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ayaz Goat Arcade</title>
-    <meta
-      name="description"
-      content="Ayaz Goat Arcade - Blue and purple gaming portal with mini-games"
-    />
+    <title>Ayaz's Arcade</title>
+    <meta name="description" content="Ayaz's Arcade" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="brand-mark">A</div>
-          <div>
-            <p class="eyebrow">Ayaz da Goat</p>
-            <strong>Arcade</strong>
+    <div class="phone-shell">
+      <div class="status-bar">
+        <span class="time">9:15</span>
+        <div class="status-right" aria-label="status icons">
+          <span class="signal signal-1"></span>
+          <span class="signal signal-2"></span>
+          <span class="signal signal-3"></span>
+          <span class="battery" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="browser-frame">
+        <div class="browser-toolbar" aria-label="browser controls">
+          <span class="tiny-dot green"></span>
+          <span class="tiny-dot yellow"></span>
+          <span class="tiny-dot red"></span>
+          <div class="toolbar-icons" aria-hidden="true">
+            <span>⌂</span>
+            <span>◎</span>
+            <span>⚙</span>
           </div>
         </div>
 
-        <div class="player-panel">
-          <label class="sr-only" for="playerNameInput">Player name</label>
-          <input id="playerNameInput" type="text" value="Ayaz Rider" maxlength="20" />
-          <button id="saveNameBtn" class="mini-btn" type="button">Save</button>
-        </div>
+        <main class="content-area">
+          <h1 class="arcade-name">Ayaz's arcade</h1>
 
-        <nav class="topnav" aria-label="Main navigation">
-          <a href="#games">Games</a>
-          <a href="#leaderboard">Leaderboard</a>
-          <a href="#feed">Battle Feed</a>
-        </nav>
-
-        <div class="utility-actions">
-          <button id="soundBtn" class="icon-btn" type="button" aria-label="Toggle sound">🔊</button>
-          <button id="themeBtn" class="icon-btn" type="button" aria-label="Toggle theme">☀️</button>
-        </div>
-      </header>
-
-      <section class="hero" aria-label="Arcade hero">
-        <div class="hero-copy">
-          <p class="eyebrow accent">PLAY • LEVEL UP • WIN</p>
-          <h2>Ayaz Goat Arcade</h2>
-          <p>
-            A neon gaming portal with fast action, classic vibes, and a little chaos.
-            Jump into quick rounds, chase combos, and keep your streak alive.
-          </p>
-
-          <div class="hero-actions">
-            <a class="primary-btn" href="#games">Start Playing</a>
-            <button id="resetAllBtn" class="ghost-btn" type="button">Reset Session</button>
+          <div class="social-row" aria-label="Social links">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-item insta" aria-label="Instagram">
+              <span>◎</span>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="social-item tiktok" aria-label="TikTok">
+              <span>♪</span>
+            </a>
+            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-item youtube" aria-label="YouTube">
+              <span>▶</span>
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-item discord" aria-label="Discord">
+              <span>◈</span>
+            </a>
           </div>
-        </div>
 
-        <aside class="hero-panel" aria-label="Player stats panel">
-          <span class="panel-badge">Player status</span>
-          <div class="stats-grid">
-            <div>
-              <span>Best streak</span>
-              <strong id="bestStreak">0</strong>
-            </div>
-            <div>
-              <span>Top score</span>
-              <strong id="topScore">0</strong>
-            </div>
-            <div>
-              <span>Combo</span>
-              <strong id="comboMeter">x1</strong>
-            </div>
-            <div>
-              <span>Player</span>
-              <strong id="playerNameLabel">Ayaz Rider</strong>
+          <div id="welcomeModal" class="welcome-modal" role="dialog" aria-modal="true">
+            <div class="popup-box">
+              <button id="closeModal" class="popup-close" type="button" aria-label="Close popup">×</button>
+              <div class="popup-message">
+                <h2>welcome, mobile user!</h2>
+                <p>since we have detected you as a mobile user, we have turned on Mobile Game Sizer!</p>
+                <p>you can change this in settings if you so choose.</p>
+                <button id="closePopup" class="popup-button" type="button">aight</button>
+              </div>
             </div>
           </div>
-        </aside>
-      </section>
+        </main>
 
-      <section class="games-section" id="games" aria-label="Arcade games">
-        <div class="section-heading">
-          <p class="eyebrow accent">Arcade lineup</p>
-          <h3>Mini-games</h3>
+        <div class="bottom-bar">
+          <button class="bottom-nav left-arrow" type="button" aria-label="Go back">‹</button>
+          <div class="url-box">
+            <button class="browser-icon" type="button" aria-label="Open menu">▣</button>
+            <span class="url-text">is.22.web.org</span>
+            <button class="refresh-icon" type="button" aria-label="Refresh">↻</button>
+          </div>
+          <button class="bottom-nav menu-btn" type="button" aria-label="More options">•••</button>
         </div>
-
-        <div class="games-grid">
-          <article class="game-card" aria-labelledby="memory-title">
-            <div class="game-header">
-              <h4 id="memory-title">Memory Match</h4>
-              <span class="chip neon">Pair hunt</span>
-            </div>
-            <p>Find 8 matching emoji pairs and build your best score.</p>
-            <div id="memoryBoard" class="memory-board" aria-label="Memory board"></div>
-            <div class="score-pill">Score: <strong id="memoryScore">0 pts</strong></div>
-            <p id="memoryStatus" class="status-text">Find all 8 pairs with as few flips as possible.</p>
-            <button id="memoryResetBtn" class="ghost-btn" type="button">Shuffle board</button>
-          </article>
-
-          <article class="game-card" aria-labelledby="reaction-title">
-            <div class="game-header">
-              <h4 id="reaction-title">Reaction Test</h4>
-              <span class="chip purple">Speed run</span>
-            </div>
-            <p>Wait for green, then click as fast as you can.</p>
-            <button id="reactionBtn" class="reaction-btn" type="button">Press to start</button>
-            <p id="reactionStatus" class="status-text">Wait for the green signal.</p>
-            <div class="score-pill">Time: <strong id="reactionScore">0 ms</strong></div>
-          </article>
-
-          <article class="game-card" aria-labelledby="guess-title">
-            <div class="game-header">
-              <h4 id="guess-title">Secret Number</h4>
-              <span class="chip blue">Lucky guess</span>
-            </div>
-            <p>Guess the hidden number between 1 and 100 to win.</p>
-            <div class="guess-controls">
-              <label class="sr-only" for="guessInput">Guess a number</label>
-              <input id="guessInput" type="number" min="1" max="100" placeholder="Enter a number" />
-              <button id="guessBtn" class="game-btn" type="button">Guess</button>
-            </div>
-            <p id="guessStatus" class="status-text">A mystery number is waiting.</p>
-            <div class="score-pill">Attempts: <strong id="guessScore">0 tries</strong></div>
-          </article>
-        </div>
-      </section>
-
-      <aside class="leaderboard" id="leaderboard" aria-label="Leaderboard panel">
-        <div class="section-heading">
-          <p class="eyebrow accent">Stats</p>
-          <h3>Leaderboard</h3>
-        </div>
-        <ul id="leaderboardList" class="leader-list">
-          <li>Memory master — 0 pts</li>
-          <li>Reflex king — 0 ms</li>
-          <li>Lucky guesser — 0 wins</li>
-        </ul>
-      </aside>
-
-      <section class="game-feed" id="feed" aria-label="Battle feed">
-        <div class="section-heading">
-          <p class="eyebrow accent">Live feed</p>
-          <h3>Battle feed</h3>
-        </div>
-        <ul id="gameLogList" class="game-log-list"></ul>
-      </section>
-
-      <section class="about-panel" aria-label="About the arcade">
-        <div class="section-heading">
-          <p class="eyebrow accent">About</p>
-          <h3>Neon arcade vibes</h3>
-        </div>
-        <p>
-          Fast rounds, quick scores, and local progress tracking mean every session feels
-          like a fresh arcade run.
-        </p>
-        <p>
-          Built in plain HTML, CSS, and JavaScript for instant browser play with no setup
-          required.
-        </p>
-      </section>
+      </div>
     </div>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+      const modal = document.getElementById('welcomeModal');
+      const closeModalBtn = document.getElementById('closeModal');
+      const closePopupBtn = document.getElementById('closePopup');
 
-    <script src="script.js"></script>
+      function hideModal() {
+        modal.style.display = 'none';
+      }
+
+      closeModalBtn.addEventListener('click', hideModal);
+      closePopupBtn.addEventListener('click', hideModal);
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) hideModal();
+      });
+    </script>
   </body>
 </html>
