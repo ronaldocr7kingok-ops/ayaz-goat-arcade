@@ -4,90 +4,80 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ayaz's Arcade</title>
-    <meta name="description" content="Ayaz's Arcade" />
+    <meta name="description" content="Ayaz's arcade app launcher" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="phone-shell">
-      <div class="status-bar">
-        <span class="time">9:15</span>
-        <div class="status-right" aria-label="status icons">
-          <span class="signal signal-1"></span>
-          <span class="signal signal-2"></span>
-          <span class="signal signal-3"></span>
-          <span class="battery" aria-hidden="true"></span>
+    <div class="screen-shell">
+      <div class="top-strip">
+        <div class="brand-badge">✦</div>
+        <div class="tool-row">
+          <button class="tool-btn" type="button" aria-label="Open utilities">＋</button>
+          <button class="tool-btn" type="button" aria-label="Open apps">▣</button>
+          <button class="tool-btn" type="button" aria-label="Open settings">⚙</button>
         </div>
       </div>
 
-      <div class="browser-frame">
-        <div class="browser-toolbar" aria-label="browser controls">
-          <span class="tiny-dot green"></span>
-          <span class="tiny-dot yellow"></span>
-          <span class="tiny-dot red"></span>
-          <div class="toolbar-icons" aria-hidden="true">
-            <span>⌂</span>
-            <span>◎</span>
-            <span>⚙</span>
-          </div>
+      <main class="app-panel">
+        <h1 class="panel-title" id="panelTitle">apps</h1>
+
+        <div class="search-box" aria-label="Search">find what you want...</div>
+
+        <div class="tile-grid" id="tileGrid">
+          <article class="app-tile tile-chatgpt" aria-label="ChatGPT">
+            <div class="tile-logo chatgpt">◌</div>
+          </article>
+
+          <article class="app-tile tile-discord" aria-label="Discord">
+            <div class="tile-logo discord">◉</div>
+          </article>
+
+          <article class="app-tile tile-nvidia" aria-label="NVIDIA">
+            <div class="tile-logo nvidia">◍</div>
+          </article>
+
+          <article class="app-tile tile-android" aria-label="Android">
+            <div class="tile-logo android">◐</div>
+          </article>
+
+          <article class="app-tile tile-movies" aria-label="Movies">
+            <div class="tile-text movies">movies</div>
+          </article>
+
+          <article class="app-tile tile-tiktok" aria-label="TikTok">
+            <div class="tile-logo tiktok">♪</div>
+          </article>
+
+          <article class="app-tile tile-youtube" aria-label="YouTube">
+            <div class="tile-logo youtube">▶</div>
+          </article>
+
+          <article class="app-tile tile-vscode" aria-label="VS Code">
+            <div class="tile-logo vscode">&lt;/&gt;</div>
+          </article>
         </div>
 
-        <main class="content-area">
-          <h1 class="arcade-name">Ayaz's arcade</h1>
-
-          <div class="social-row" aria-label="Social links">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-item insta" aria-label="Instagram">
-              <span>◎</span>
-            </a>
-            <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="social-item tiktok" aria-label="TikTok">
-              <span>♪</span>
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-item youtube" aria-label="YouTube">
-              <span>▶</span>
-            </a>
-            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-item discord" aria-label="Discord">
-              <span>◈</span>
-            </a>
+        <div class="footer-status">
+          <span>online users: 1455</span>
+          <div class="footer-icons">
+            <button class="mini-icon" type="button" aria-label="Settings">⚙</button>
+            <button class="mini-icon" type="button" aria-label="Profile">◔</button>
           </div>
-
-          <div id="welcomeModal" class="welcome-modal" role="dialog" aria-modal="true">
-            <div class="popup-box">
-              <button id="closeModal" class="popup-close" type="button" aria-label="Close popup">×</button>
-              <div class="popup-message">
-                <h2>welcome, mobile user!</h2>
-                <p>since we have detected you as a mobile user, we have turned on Mobile Game Sizer!</p>
-                <p>you can change this in settings if you so choose.</p>
-                <button id="closePopup" class="popup-button" type="button">aight</button>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <div class="bottom-bar">
-          <button class="bottom-nav left-arrow" type="button" aria-label="Go back">‹</button>
-          <div class="url-box">
-            <button class="browser-icon" type="button" aria-label="Open menu">▣</button>
-            <span class="url-text">is.22.web.org</span>
-            <button class="refresh-icon" type="button" aria-label="Refresh">↻</button>
-          </div>
-          <button class="bottom-nav menu-btn" type="button" aria-label="More options">•••</button>
         </div>
-      </div>
+      </main>
     </div>
 
     <script>
-      const modal = document.getElementById('welcomeModal');
-      const closeModalBtn = document.getElementById('closeModal');
-      const closePopupBtn = document.getElementById('closePopup');
+      const title = document.getElementById('panelTitle');
+      const grid = document.getElementById('tileGrid');
+      const toggleTitle = () => {
+        const current = title.textContent.trim();
+        title.textContent = current === 'apps' ? 'games' : 'apps';
+        grid.classList.toggle('games-view', title.textContent === 'games');
+      };
 
-      function hideModal() {
-        modal.style.display = 'none';
-      }
-
-      closeModalBtn.addEventListener('click', hideModal);
-      closePopupBtn.addEventListener('click', hideModal);
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) hideModal();
-      });
+      const brandBadge = document.querySelector('.brand-badge');
+      brandBadge.addEventListener('click', toggleTitle);
     </script>
   </body>
 </html>
