@@ -4,600 +4,438 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ayaz Arcade</title>
-    <meta name="description" content="Ayaz's mini game arcade" />
     <style>
       :root {
-        --bg: #070d17;
-        --bg-2: #101a2d;
-        --panel: rgba(18, 27, 42, 0.86);
-        --panel-soft: rgba(24, 35, 55, 0.7);
-        --border: rgba(122, 246, 255, 0.45);
-        --accent: #7af6ff;
-        --accent-2: #a58bff;
-        --accent-3: #ff6cc8;
-        --success: #71ffb9;
-        --danger: #ff7d7d;
-        --text: #edf6ff;
-        --muted: #afc5e6;
-        --shadow: rgba(0, 0, 0, 0.38);
+        --bg-deep: #070d19;
+        --bg-mid: #111d31;
+        --panel: rgba(14, 23, 35, 0.72);
+        --panel-strong: rgba(31, 38, 48, 0.8);
+        --panel-soft: rgba(255,255,255,0.06);
+        --border: rgba(255,255,255,0.08);
+        --text: #edf5ff;
+        --muted: rgba(237,245,255,0.78);
+        --soft: rgba(255,255,255,0.4);
+        --green: #8ef0b0;
+        --yellow: #f7d46e;
+        --red: #ff7c7c;
+        --blue: #7ec8ff;
       }
 
       * { box-sizing: border-box; }
 
       html, body {
         margin: 0;
+        width: 100%;
         min-height: 100%;
         font-family: Arial, Helvetica, sans-serif;
-        background:
-          radial-gradient(circle at top, rgba(165,139,255,0.18), transparent 28%),
-          linear-gradient(180deg, #040b15 0%, #090f1d 100%);
+        background: #000;
         color: var(--text);
       }
 
       body {
         min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 28px 16px;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 50% 10%, rgba(87, 128, 180, 0.22), transparent 26%),
+          linear-gradient(180deg, #020813 0%, #090f1b 100%);
       }
 
-      body.light-mode {
-        --bg: #edf5ff;
-        --bg-2: #dfeaff;
-        --panel: rgba(255,255,255,0.9);
-        --panel-soft: rgba(233, 240, 255, 0.9);
-        --border: rgba(80, 121, 255, 0.3);
-        --accent: #0e6cff;
-        --accent-2: #7d5cf5;
-        --accent-3: #ff55ae;
-        --success: #0aa869;
-        --danger: #d94b4b;
-        --text: #10213d;
-        --muted: #4f6283;
-        --shadow: rgba(64, 88, 128, 0.18);
-      }
-
-      .arcade-app {
-        width: min(1180px, 100%);
-        background: rgba(6, 11, 20, 0.55);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 28px;
-        box-shadow: 0 28px 60px var(--shadow);
+      .browser-shell {
+        position: relative;
+        width: min(92vw, 1120px);
+        height: min(86vh, 860px);
+        background: rgba(9, 16, 25, 0.96);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        box-shadow: 0 26px 60px rgba(0,0,0,0.7);
         overflow: hidden;
       }
 
-      body.light-mode .arcade-app {
-        background: rgba(255,255,255,0.45);
+      .browser-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle, rgba(255,255,255,0.25) 0.8px, transparent 1px) 0 0 / 18px 18px,
+          radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.3px) 9px 9px / 18px 18px;
+        opacity: 0.22;
+        pointer-events: none;
       }
 
       .topbar {
+        position: relative;
+        z-index: 2;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 24px;
-        background: rgba(255,255,255,0.02);
-        border-bottom: 1px solid rgba(255,255,255,0.06);
+        gap: 16px;
+        padding: 12px 18px 14px;
+        background: rgba(25, 27, 34, 0.7);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
       }
 
-      .brand {
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-size: 1rem;
-        color: var(--accent);
-      }
-
-      .top-actions {
+      .status-left {
         display: flex;
-        gap: 10px;
-      }
-
-      .toggle-btn,
-      .ghost-btn,
-      .primary-btn,
-      .reaction-btn,
-      .guess-btn,
-      .mini-btn {
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        color: var(--text);
-        background: rgba(255,255,255,0.04);
-        cursor: pointer;
-        transition: transform 0.18s ease, opacity 0.18s ease;
-      }
-
-      .toggle-btn:hover,
-      .ghost-btn:hover,
-      .primary-btn:hover,
-      .reaction-btn:hover,
-      .guess-btn:hover,
-      .mini-btn:hover {
-        transform: translateY(-1px);
-      }
-
-      .toggle-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 1.2rem;
-      }
-
-      .content-wrap {
-        padding: 24px;
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: 1.3fr 0.9fr;
-        gap: 18px;
-        margin-bottom: 18px;
-      }
-
-      .panel {
-        background: linear-gradient(135deg, var(--panel), var(--panel-soft));
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 22px;
-        box-shadow: 0 16px 28px rgba(0,0,0,0.18);
-      }
-
-      .profile-panel {
-        padding: 22px;
-      }
-
-      .profile-header {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 14px;
-      }
-
-      .eyebrow {
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        font-size: 0.68rem;
-        font-weight: 700;
-      }
-
-      .player-row {
-        display: flex;
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .player-input {
-        flex: 1;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        color: var(--text);
-        padding: 12px 14px;
-        font-size: 1rem;
-      }
-
-      .primary-btn,
-      .ghost-btn,
-      .guess-btn,
-      .mini-btn {
-        padding: 12px 16px;
-        font-weight: 700;
-      }
-
-      .primary-btn {
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        border: none;
-        color: #071521;
-      }
-
-      .player-name {
-        margin-top: 12px;
-        font-size: clamp(1.6rem, 2vw, 2.1rem);
-        font-weight: 800;
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 12px;
+        min-width: 180px;
       }
 
-      .stat-card {
-        padding: 16px 14px;
-        min-height: 110px;
-      }
-
-      .stat-card span {
-        display: block;
-        color: var(--muted);
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-
-      .stat-card strong {
-        display: block;
-        margin-top: 14px;
-        font-size: clamp(1.4rem, 2vw, 2rem);
-      }
-
-      .games-grid {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr;
-        gap: 18px;
-      }
-
-      .game-panel {
-        padding: 18px;
-      }
-
-      .panel-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-      }
-
-      .panel-header h3 {
-        margin: 0;
+      .time-wrap {
         font-size: 1.05rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-weight: 700;
+        color: rgba(255,255,255,0.9);
       }
 
-      .mini-btn {
-        padding: 8px 12px;
-        font-size: 0.75rem;
-      }
-
-      .memory-board {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(52px, 1fr));
-        gap: 12px;
-      }
-
-      .memory-card {
-        aspect-ratio: 1 / 1;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px;
-        background: linear-gradient(135deg, rgba(122,246,255,0.08), rgba(165,139,255,0.16));
-        font-size: clamp(1.5rem, 2.5vw, 2.1rem);
-        color: var(--text);
-        cursor: pointer;
-        transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
-      }
-
-      .memory-card:hover {
-        transform: translateY(-1px);
-      }
-
-      .memory-card.is-flipped,
-      .memory-card.is-matched {
-        background: linear-gradient(135deg, rgba(122,246,255,0.2), rgba(165,139,255,0.26));
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
-      }
-
-      .score-row {
+      .browser-tools {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-top: 16px;
-        gap: 8px;
+        gap: 12px;
+        margin-left: auto;
+        margin-right: 8px;
       }
 
-      .score-value {
-        font-size: 1.3rem;
-        font-weight: 800;
+      .nav-button {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
+        font-size: 1.2rem;
+        cursor: default;
       }
 
-      .combo-pill {
+      .nav-button.back {
+        font-size: 1.8rem;
+        line-height: 1;
+      }
+
+      .address-bar {
+        flex: 1;
+        max-width: 560px;
+        min-width: 180px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.05);
+        padding: 0 14px;
+        margin: 0 auto;
+      }
+
+      .url-icon {
+        font-size: 1.15rem;
+      }
+
+      .url-text {
+        flex: 1;
+        font-size: 1.1rem;
+        color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tiny-pill {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        min-width: 72px;
-        padding: 8px 12px;
+        gap: 8px;
+        padding: 5px 10px;
         border-radius: 999px;
-        background: rgba(122, 246, 255, 0.12);
-        border: 1px solid rgba(122,246,255,0.28);
-        color: var(--accent);
-        font-weight: 800;
-      }
-
-      .status-text {
-        margin-top: 12px;
-        color: var(--muted);
-        line-height: 1.5;
-        min-height: 48px;
-      }
-
-      .status-text.success {
-        color: var(--success);
-      }
-
-      .status-text.danger {
-        color: var(--danger);
-      }
-
-      .side-stack {
-        display: grid;
-        gap: 18px;
-      }
-
-      .reaction-btn {
-        width: 100%;
-        min-height: 140px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-        font-size: 1.25rem;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-
-      .reaction-btn.waiting {
-        background: linear-gradient(135deg, rgba(255,201,87,0.18), rgba(255,160,72,0.12));
-        border-color: rgba(255,170,64,0.32);
-      }
-
-      .reaction-btn.ready {
-        background: linear-gradient(135deg, rgba(113,255,185,0.28), rgba(87,177,255,0.18));
-        border-color: rgba(113,255,185,0.38);
-      }
-
-      .guess-wrap {
-        display: flex;
-        gap: 10px;
-      }
-
-      .guess-input {
-        flex: 1;
-        background: rgba(255,255,255,0.04);
+        background: rgba(255,255,255,0.08);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        color: var(--text);
-        padding: 12px 14px;
-        font-size: 1rem;
+        font-size: 0.8rem;
       }
 
-      .guess-btn {
-        background: linear-gradient(135deg, var(--accent-3), #ff8a65);
-        border: none;
-        color: #fff;
-      }
-
-      .leaderboard {
-        margin-top: 18px;
-        padding: 18px;
-      }
-
-      .leaderboard h3 {
-        margin: 0 0 12px;
-        font-size: 0.82rem;
-        letter-spacing: 0.12em;
-        color: var(--muted);
-        text-transform: uppercase;
-      }
-
-      .leaderboard ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 10px;
-      }
-
-      .leaderboard li {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 12px;
-        padding: 10px 12px;
-        color: var(--text);
-      }
-
-      .game-log {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        gap: 10px;
-      }
-
-      .game-log li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        background: rgba(255,255,255,0.03);
-        border-left: 4px solid rgba(122,246,255,0.7);
-        border-radius: 10px;
-        padding: 12px 14px;
-      }
-
-      .game-log li[data-tone="alert"] {
-        border-left-color: rgba(255,125,125,0.8);
-      }
-
-      .game-log li[data-tone="good"] {
-        border-left-color: rgba(113,255,185,0.8);
-      }
-
-      .game-log strong {
-        font-size: 0.95rem;
-      }
-
-      .game-log span {
-        color: var(--muted);
-        font-size: 0.75rem;
-        white-space: nowrap;
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        background: #8ef0b0;
       }
 
       .toolbar {
-        margin-top: 18px;
+        position: relative;
+        z-index: 2;
         display: flex;
-        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 20px 0;
       }
 
-      .toast {
-        position: fixed;
-        bottom: 26px;
-        left: 50%;
-        transform: translateX(-50%) translateY(16px);
-        opacity: 0;
-        pointer-events: none;
-        background: rgba(9, 16, 25, 0.9);
-        color: white;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 999px;
-        padding: 10px 18px;
+      .browser-tab {
+        flex: 1;
+        max-width: 260px;
+        height: 38px;
+        border-radius: 16px 16px 0 0;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.8);
         font-weight: 700;
-        transition: opacity 0.18s ease, transform 0.18s ease;
+        font-size: 0.95rem;
       }
 
-      .toast.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
+      .browser-tab.active {
+        background: rgba(255,255,255,0.08);
       }
 
-      @media (max-width: 860px) {
-        .hero,
-        .games-grid {
-          grid-template-columns: 1fr;
-        }
+      .browser-panel {
+        position: relative;
+        z-index: 2;
+        margin: 8px 26px 24px;
+        border-radius: 18px;
+        background: rgba(18, 28, 38, 0.58);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 18px 18px 16px;
+        min-height: 600px;
       }
 
-      @media (max-width: 600px) {
-        .stats-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+      .finder-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .finder-pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        color: var(--text);
+        font-size: 1.8rem;
+      }
+
+      .app-title {
+        text-align: center;
+        margin: 8px 0 0;
+        font-size: clamp(2.8rem, 3vw, 4rem);
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        color: rgba(255,255,255,0.96);
+      }
+
+      .app-subtitle {
+        text-align: center;
+        margin-top: 10px;
+        color: rgba(255,255,255,0.72);
+        font-size: clamp(1.2rem, 1.7vw, 2rem);
+        font-weight: 600;
+      }
+
+      .app-grid {
+        width: min(730px, 100%);
+        margin: 24px auto 0;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 14px 14px;
+      }
+
+      .game-tile {
+        position: relative;
+        height: 145px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        overflow: hidden;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 12px 18px rgba(0,0,0,0.18);
+      }
+
+      .game-tile:nth-child(1) { background: linear-gradient(135deg, #98e77a, #8bc46b); }
+      .game-tile:nth-child(2) { background: linear-gradient(135deg, #f1d77a, #ffc35d); }
+      .game-tile:nth-child(3) { background: linear-gradient(135deg, #7a75ff, #3092f7); }
+      .game-tile:nth-child(4) { background: linear-gradient(135deg, #61c8ff, #7f5aff); }
+      .game-tile:nth-child(5) { background: linear-gradient(135deg, #0f7ae4, #4bb5ff); }
+      .game-tile:nth-child(6) { background: linear-gradient(135deg, #ff7a62, #ffb565); }
+      .game-tile:nth-child(7) { background: linear-gradient(135deg, #8a8cff, #4d62ff); }
+      .game-tile:nth-child(8) { background: linear-gradient(135deg, #fd6b8a, #ff9a5d); }
+
+      .tile-face {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        color: rgba(255,255,255,0.96);
+        text-shadow: 0 6px 20px rgba(0,0,0,0.17);
+      }
+
+      .tile-emoji {
+        font-size: clamp(2.7rem, 3vw, 4rem);
+      }
+
+      .tile-text {
+        font-size: clamp(1.1rem, 1.5vw, 1.6rem);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .tile-text.small {
+        font-size: 1rem;
+      }
+
+      .search-box {
+        width: min(430px, 88%);
+        height: 56px;
+        margin: 22px auto 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.07);
+        color: rgba(255,255,255,0.7);
+        font-size: clamp(1rem, 1.4vw, 1.5rem);
+        font-weight: 700;
+      }
+
+      .footer-bar {
+        position: absolute;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        width: min(540px, 74%);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        font-size: 1rem;
+        color: rgba(255,255,255,0.8);
+      }
+
+      .online-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+      }
+
+      .icon-set {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .round-btn {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 800px) {
+        .browser-shell {
+          width: 100vw;
+          height: 100vh;
+          border-radius: 0;
         }
 
-        .topbar {
-          padding: 16px 18px;
+        .address-bar {
+          max-width: 320px;
         }
 
-        .content-wrap {
-          padding: 16px;
+        .app-grid {
+          grid-template-columns: repeat(2, minmax(120px, 1fr));
         }
 
-        .player-row,
-        .guess-wrap {
-          flex-direction: column;
+        .browser-panel {
+          min-height: auto;
+          padding-bottom: 80px;
         }
       }
     </style>
   </head>
   <body>
-    <div class="arcade-app">
-      <header class="topbar">
-        <div class="brand">Ayaz Arcade</div>
-        <div class="top-actions">
-          <button id="soundBtn" class="toggle-btn" type="button" aria-label="Toggle sound">🔊</button>
-          <button id="themeBtn" class="toggle-btn" type="button" aria-label="Toggle theme">☀️</button>
-        </div>
-      </header>
-
-      <div class="content-wrap">
-        <section class="hero">
-          <div class="panel profile-panel">
-            <div class="profile-header">
-              <span class="eyebrow">Player Profile</span>
-            </div>
-
-            <div class="player-row">
-              <input id="playerNameInput" class="player-input" type="text" value="Ayaz Rider" aria-label="Player name" />
-              <button id="saveNameBtn" class="primary-btn" type="button">Save</button>
-            </div>
-
-            <div id="playerNameLabel" class="player-name">Ayaz Rider</div>
-          </div>
-
-          <div class="stats-grid">
-            <div class="panel stat-card">
-              <span>Best Memory</span>
-              <strong id="topScore">0</strong>
-            </div>
-            <div class="panel stat-card">
-              <span>Best Reflex</span>
-              <strong id="reactionScore">0 ms</strong>
-            </div>
-            <div class="panel stat-card">
-              <span>Wins</span>
-              <strong id="guessScore">0</strong>
-            </div>
-            <div class="panel stat-card">
-              <span>Best Streak</span>
-              <strong id="bestStreak">0</strong>
-            </div>
-          </div>
-        </section>
-
-        <div class="games-grid">
-          <section class="panel game-panel">
-            <div class="panel-header">
-              <h3>Memory Match</h3>
-              <button id="memoryResetBtn" class="mini-btn" type="button">Shuffle</button>
-            </div>
-
-            <div id="memoryBoard" class="memory-board" aria-label="Memory match board"></div>
-
-            <div class="score-row">
-              <div id="memoryScore" class="score-value">0 pts</div>
-              <div id="comboMeter" class="combo-pill">x1</div>
-            </div>
-
-            <p id="memoryStatus" class="status-text">Find all 8 pairs with as few flips as possible.</p>
-          </section>
-
-          <div class="side-stack">
-            <section class="panel game-panel">
-              <div class="panel-header">
-                <h3>Reaction Test</h3>
-              </div>
-
-              <button id="reactionBtn" class="reaction-btn" type="button">Press to start</button>
-              <div class="score-row">
-                <div id="reactionTime" class="score-value">0 ms</div>
-              </div>
-              <p id="reactionStatus" class="status-text">Wait for the green signal.</p>
-            </section>
-
-            <section class="panel game-panel">
-              <div class="panel-header">
-                <h3>Secret Number</h3>
-              </div>
-
-              <div class="guess-wrap">
-                <input id="guessInput" class="guess-input" type="number" min="1" max="100" placeholder="1-100" aria-label="Guess a number" />
-                <button id="guessBtn" class="guess-btn" type="button">Guess</button>
-              </div>
-
-              <div class="score-row">
-                <div id="guessCounter" class="score-value">0 tries</div>
-              </div>
-
-              <p id="guessStatus" class="status-text">A mystery number is waiting.</p>
-            </section>
-          </div>
+    <div class="browser-shell">
+      <div class="topbar">
+        <div class="status-left">
+          <div class="time-wrap">9:25 PM</div>
         </div>
 
-        <section class="panel leaderboard">
-          <h3>Arcade Leaderboard</h3>
-          <ul id="leaderboardList"></ul>
-        </section>
+        <div class="browser-tools">
+          <div class="nav-button back">‹</div>
+        </div>
 
-        <section class="panel game-panel" style="margin-top: 18px;">
-          <div class="panel-header">
-            <h3>Battle Feed</h3>
-            <button id="resetAllBtn" class="mini-btn" type="button">Reset All</button>
+        <div class="address-bar">
+          <span class="url-icon">⚙</span>
+          <div class="url-text">anv-ims-lms.22web.org</div>
+        </div>
+
+        <div class="toolbar-right">
+          <div class="tiny-pill"><span class="dot"></span> 56%</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="browser-tab">Music Genres and C...</div>
+        <div class="browser-tab active">Google</div>
+        <div class="browser-tab">Study.com | Math</div>
+        <div class="browser-tab">IXL | Math, Language...</div>
+      </div>
+
+      <div class="browser-panel">
+        <div class="finder-row">
+          <div class="finder-pill">✦</div>
+          <div class="finder-pill">＋</div>
+          <div class="finder-pill">▣</div>
+          <div class="finder-pill">⚙</div>
+          <div class="finder-pill">＋</div>
+        </div>
+
+        <h1 class="app-title">games</h1>
+        <div class="app-subtitle">loaded 224 games...</div>
+
+        <div class="search-box">find what you want...</div>
+
+        <div class="app-grid">
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🧩</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎮</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🌌</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🏔️</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎯</span></div></div>
+
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🦕</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🚀</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">👾</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎲</span></div></div>
+          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🧠</span></div></div>
+        </div>
+
+        <div class="footer-bar">
+          <div class="online-badge">online users: 1455</div>
+          <div class="icon-set">
+            <div class="round-btn">⚙</div>
+            <div class="round-btn">◌</div>
           </div>
-          <ul id="gameLogList" class="game-log"></ul>
-        </section>
+        </div>
       </div>
     </div>
-
-    <div id="toast" class="toast" aria-live="polite">Saved</div>
-
-    <script src="script.js"></script>
   </body>
 </html>
