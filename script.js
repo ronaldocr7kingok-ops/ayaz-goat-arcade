@@ -44,9 +44,11 @@ const els = {
   soundBtn: $('soundBtn'),
   themeBtn: $('themeBtn'),
   saveNameBtn: $('saveNameBtn'),
+  logList: $('gameLogList'),
 };
 
 let toastTimer = null;
+const logEntries = [];
 
 function safeStorageRead(key, fallback) {
   try {
@@ -104,6 +106,23 @@ function renderLeaderboard() {
   const reactionLine = `Reflex king — ${state.reactionBest ?? 0} ms`;
   const guessLine = `Lucky guesser — ${state.totalWins} wins`;
   els.leaderboardList.innerHTML = `<li>${memoryLine}</li><li>${reactionLine}</li><li>${guessLine}</li>`;
+}
+
+function renderLog() {
+  els.logList.innerHTML = logEntries
+    .slice(0, 8)
+    .map(
+      (entry) =>
+        `<li data-tone="${entry.tone}"><strong>${entry.message}</strong><span>${entry.time}</span></li>`
+    )
+    .join('');
+}
+
+function logEvent(message, tone = 'good') {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  logEntries.unshift({ message, tone, time });
+  if (logEntries.length > 8) logEntries.pop();
+  renderLog();
 }
 
 function toast(message) {
@@ -198,6 +217,7 @@ function handleMemoryClick(card, button) {
       state.bestStreak += 1;
       state.totalWins += 1;
       toast('Memory board cleared!');
+      logEvent('Memory board cleared for 700+ points.', 'good');
       els.memoryStatus.textContent = 'Board cleared! Epic memory run.';
       els.memoryStatus.className = 'status-text success';
       saveState();
@@ -206,6 +226,7 @@ function handleMemoryClick(card, button) {
       return;
     }
 
+    logEvent('Memory match found. Combo rising.', 'good');
     beep(680);
     saveState();
     renderProfile();
@@ -215,6 +236,7 @@ function handleMemoryClick(card, button) {
   state.combo = 1;
   els.comboMeter.textContent = `x${state.combo}`;
   els.memoryStatus.textContent = 'Not a match — reset and try again.';
+  logEvent('Memory miss. Reset and try the board again.', 'alert');
   setTimeout(() => {
     [...els.board.children].forEach((item) => {
       if (!item.classList.contains('is-matched')) {
@@ -236,6 +258,7 @@ function startReactionGame() {
   els.reaction.classList.remove('ready');
   els.reaction.textContent = 'Wait for green...';
   els.reactionStatus.textContent = 'Stay focused — do not click early.';
+  els.reactionStatus.className = 'status-text';
   state.reactionReady = false;
 
   const delay = 1000 + Math.random() * 2500;
@@ -259,6 +282,7 @@ function endReactionGame() {
     els.reaction.textContent = 'Press to start';
     els.reactionStatus.textContent = 'Too soon. Try again.';
     els.reactionStatus.className = 'status-text danger';
+    logEvent('Reaction test was too early. Reset and try again.', 'alert');
     state.reactionReady = false;
     return;
   }
@@ -272,6 +296,7 @@ function endReactionGame() {
   els.reactionStatus.className = 'status-text success';
   els.reaction.classList.remove('waiting', 'ready');
   els.reaction.textContent = 'Press to start';
+  logEvent(`Reaction time logged: ${elapsed} ms.`, 'good');
   state.reactionReady = false;
   state.reactionStart = 0;
   saveState();
@@ -298,6 +323,7 @@ function handleGuess() {
   if (!Number.isInteger(value) || value < 1 || value > 100) {
     els.guessStatus.textContent = 'Enter a whole number between 1 and 100.';
     els.guessStatus.className = 'status-text danger';
+    logEvent('Guess input invalid. Enter a number from 1 to 100.', 'alert');
     return;
   }
 
@@ -311,6 +337,7 @@ function handleGuess() {
     els.comboMeter.textContent = `x${state.combo}`;
     els.guessStatus.textContent = `Correct! ${state.guessNumber} was the secret number.`;
     els.guessStatus.className = 'status-text success';
+    logEvent(`Secret number cracked: ${state.guessNumber}.`, 'good');
     toast('Secret number solved!');
     beep(900, 0.14);
     saveState();
@@ -324,6 +351,7 @@ function handleGuess() {
   els.guessStatus.className = 'status-text';
   els.guessInput.value = '';
   els.guessInput.focus();
+  logEvent('Guess attempt missed. New clue loaded.', 'alert');
   beep(250, 0.07);
 }
 
@@ -333,6 +361,7 @@ function updatePlayerName() {
   els.playerNameLabel.textContent = state.playerName;
   saveState();
   renderProfile();
+  logEvent(`${state.playerName} saved to the arcade profile.`, 'good');
   toast(`Profile saved for ${state.playerName}`);
 }
 
@@ -355,6 +384,7 @@ function resetSession() {
   els.reaction.textContent = 'Press to start';
   els.reactionStatus.textContent = 'Wait for the green signal.';
   els.reactionStatus.className = 'status-text';
+  logEvent('Session reset. Fresh run started.', 'alert');
   saveState();
   renderProfile();
   renderLeaderboard();
@@ -374,7 +404,10 @@ els.guessInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') handleGuess();
 });
 
-$('memoryResetBtn').addEventListener('click', buildMemoryBoard);
+$('memoryResetBtn').addEventListener('click', () => {
+  buildMemoryBoard();
+  logEvent('Memory board reshuffled.', 'good');
+});
 $('resetAllBtn').addEventListener('click', resetSession);
 els.saveNameBtn.addEventListener('click', updatePlayerName);
 els.playerNameInput.addEventListener('keydown', (event) => {
@@ -385,6 +418,7 @@ els.soundBtn.addEventListener('click', () => {
   state.sound = !state.sound;
   localStorage.setItem('ayazSound', state.sound ? 'on' : 'off');
   els.soundBtn.textContent = state.sound ? '🔊' : '🔇';
+  logEvent(state.sound ? 'Sound enabled.' : 'Sound muted.', 'good');
   toast(state.sound ? 'Sound on' : 'Sound off');
 });
 
@@ -393,10 +427,12 @@ els.themeBtn.addEventListener('click', () => {
   document.body.classList.toggle('light-mode', nextMode);
   localStorage.setItem('ayazTheme', nextMode ? 'light' : 'dark');
   els.themeBtn.textContent = nextMode ? '🌙' : '☀️';
+  logEvent(nextMode ? 'Light mode enabled.' : 'Dark mode enabled.', 'good');
 });
 
 loadState();
 renderProfile();
 renderLeaderboard();
+logEvent('Arcade booted. Ready for the next run.', 'good');
 buildMemoryBoard();
 setupGuessGame();

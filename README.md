@@ -11,6 +11,7 @@ A polished arcade portal built with plain HTML, CSS, and JavaScript. It runs wit
 - Player name system and local profile save
 - Persistent stats with `localStorage`
 - Sound toggle and theme toggle
+- Dedicated battle-feed log for real-time feedback
 - Responsive layout for desktop and mobile
 
 ## Run locally
