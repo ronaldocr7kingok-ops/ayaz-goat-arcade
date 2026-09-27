@@ -1,22 +1,27 @@
 # Ayaz da Goat Arcade
 
-A polished arcade portal built with plain HTML, CSS, and JavaScript. It runs without a build step and is easy to host anywhere.
+**Live arcade:** https://ronaldocr7kingok-ops.github.io/ayaz-goat-arcade/
 
-## Highlights
+A polished arcade portal built with plain HTML, CSS, and JavaScript. No build step needed.
 
-- Neon blue-and-purple arcade layout
-- Memory match challenge
-- Reaction-time test
-- Guess-the-number game
-- Player name system and local profile save
-- Persistent stats with `localStorage`
-- Sound toggle and theme toggle
-- Dedicated battle-feed log for real-time feedback
+## Games
+
+- **Memory Match** — find 8 emoji pairs and build your best score
+- **Reaction Test** — wait for the green signal and record your fastest time
+- **Secret Number** — solve a 1–100 guessing challenge
+
+## Features
+
+- Player name system with local profile save
+- Persistent stats via `localStorage`
+- Sound toggle and theme toggle (light/dark mode)
+- Dedicated battle-feed log for real-time event feedback
+- Combo scoring system
 - Responsive layout for desktop and mobile
 
 ## Run locally
 
-Open `index.html` directly in a browser, or serve the folder:
+Open `index.html` directly in a browser, or serve it:
 
 ```bash
 python3 -m http.server 8000
@@ -26,4 +31,8 @@ Then visit `http://localhost:8000`.
 
 ## Deploy
 
-Use GitHub Pages or any static host. For GitHub Pages, publish the repository root as the site source.
+This repo is already set up for GitHub Pages. The arcade is live at:
+
+```
+https://ronaldocr7kingok-ops.github.io/ayaz-goat-arcade/
+```
