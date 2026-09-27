@@ -5,36 +5,163 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ayaz Arcade</title>
 <style>
-:root{--ink:#f2f6ff;--muted:#b8c2d8;--glass:rgba(28,34,49,.72);--line:rgba(255,255,255,.1)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:var(--ink);background:#050914}body{min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 50% 20%,#20264a 0,#0c1125 35%,#030711 78%)}
-.stars{position:fixed;inset:0;pointer-events:none;overflow:hidden}.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.7;animation:blink 3s infinite}@keyframes blink{50%{opacity:.15}}
-.moon{position:fixed;z-index:0;right:7vw;top:7vh;width:clamp(100px,15vw,190px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fffde5 0 12%,#e9e1b0 40%,#a39b78 100%);box-shadow:0 0 45px rgba(255,247,190,.3),inset -20px -14px 30px rgba(0,0,0,.3);animation:float 7s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px)}}
-.shell{position:relative;z-index:1;width:min(1180px,94vw);min-height:min(900px,94vh);margin:3vh auto;background:rgba(11,16,28,.88);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 25px 70px #000b}
-.browser{height:72px;display:flex;align-items:center;gap:14px;padding:12px 18px;background:rgba(35,37,46,.72);border-bottom:1px solid var(--line)}.time{font-weight:700;white-space:nowrap}.back{font-size:2rem}.address{flex:1;max-width:580px;margin:auto;height:42px;border-radius:22px;background:rgba(255,255,255,.07);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:9px;color:var(--muted);font-weight:700}.status{margin-left:auto;border:1px solid var(--line);border-radius:20px;padding:7px 11px;font-size:.75rem}.status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9bf0b2;margin-right:6px}
-.tabs{display:flex;gap:10px;padding:10px 22px 0;overflow:auto}.tab{min-width:160px;padding:12px 18px;text-align:center;border-radius:15px 15px 0 0;background:rgba(255,255,255,.04);color:var(--muted);font-weight:700;cursor:pointer}.tab.active{background:rgba(255,255,255,.1);color:var(--ink)}
-main{margin:10px 24px 24px;padding:20px;min-height:760px;border:1px solid var(--line);border-radius:18px;background:var(--glass)}.quick{display:flex;justify-content:center;gap:14px}.quick span{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.05);font-size:1.5rem}.heading{text-align:center;margin:25px 0 5px;font-size:clamp(3rem,6vw,5rem);line-height:1}.sub{text-align:center;color:var(--muted);font-size:1.2rem;margin:0}.search{display:block;width:min(440px,90%);margin:22px auto;height:52px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.06);color:var(--muted);padding:0 18px;text-align:center;font-size:1rem}.section{display:none}.section.active{display:block}.section-title{text-align:center;text-transform:lowercase;color:var(--muted);font-size:1rem;margin:24px 0 12px}.grid{width:min(850px,96%);margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:15px}.card{min-height:145px;border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;text-decoration:none;cursor:pointer;box-shadow:inset 0 0 20px #fff1,0 12px 22px #0004;transition:.2s}.card:hover{transform:translateY(-5px);filter:brightness(1.12)}.card b{font-size:3rem;text-shadow:0 5px 12px #0005}.card label{font-weight:700;font-size:1rem}.app-youtube{background:linear-gradient(135deg,#ff3b30,#c40000)}.app-tiktok{background:linear-gradient(135deg,#15151d,#03d9df,#fe2855)}.app-discord{background:#5865f2}.app-instagram{background:linear-gradient(135deg,#ffd451,#f22968,#6d28d9)}.app-google{background:#4285f4}.game-memory{background:linear-gradient(135deg,#71c7ff,#654cff)}.game-reaction{background:linear-gradient(135deg,#72e6ae,#2479d8)}.game-guess{background:linear-gradient(135deg,#ff8a61,#db3d73)}.game-click{background:linear-gradient(135deg,#b07aff,#ef4fbd)}
-.footer{display:flex;justify-content:space-between;max-width:650px;margin:28px auto 0;color:var(--muted);font-weight:700}.modal{display:none;position:fixed;inset:0;z-index:5;background:#000b;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(620px,96vw);max-height:90vh;overflow:auto;padding:25px;border-radius:20px;background:#10182a;border:1px solid var(--line);text-align:center}.close{float:right;border:0;background:none;color:#fff;font-size:1.8rem;cursor:pointer}.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px}.memory{aspect-ratio:1;border:1px solid var(--line);border-radius:12px;background:#283658;color:#fff;font-size:2rem;cursor:pointer}.action{border:0;border-radius:12px;padding:13px 22px;background:linear-gradient(135deg,#7af6ff,#a58bff);font-weight:700;cursor:pointer}.big-action{width:180px;height:180px;border-radius:50%;font-size:2rem;background:#263752;color:#fff;border:2px solid #ffffff33;cursor:pointer}.big-action.ready{background:#39b976}.number{padding:12px;border-radius:10px;border:1px solid var(--line);background:#ffffff10;color:#fff;width:180px;font-size:1rem}
-@media(max-width:650px){.shell{width:100vw;margin:0;border-radius:0}.browser{gap:8px}.address{font-size:.75rem}.status{display:none}main{margin:8px;padding:14px}.grid{grid-template-columns:repeat(2,1fr)}.moon{right:3vw;top:12vh}}
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#000;overflow:hidden}
+body{background:linear-gradient(180deg,#0a0f1f 0%,#050a15 50%,#000 100%);position:relative}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none}.star{position:absolute;width:1px;height:1px;background:#fff;border-radius:50%;opacity:0.6;animation:twinkle 2s+var(--delay) ease-in-out infinite}@keyframes twinkle{0%,100%{opacity:0.3}50%{opacity:0.9}}
+.moon{position:fixed;right:8vw;top:10vh;z-index:0;width:clamp(120px,18vw,260px);aspect-ratio:1;background:radial-gradient(circle at 30% 25%,#fffffb 0,#feffd9 8%,#f9f5c8 20%,#f0e680 50%,#c9b844 85%,#8b7d20 100%);border-radius:50%;box-shadow:0 0 80px rgba(255,250,180,0.4),inset -30px -20px 50px rgba(0,0,0,0.4);filter:drop-shadow(0 0 40px rgba(255,240,100,0.2));animation:moonGlow 8s ease-in-out infinite}@keyframes moonGlow{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.02)}}
+.moon::before{content:'';position:absolute;width:50px;height:70px;background:radial-gradient(ellipse,rgba(0,0,0,0.2) 0,transparent 70%);border-radius:50%;top:50px;left:60px}
+.moon::after{content:'';position:absolute;width:35px;height:50px;background:radial-gradient(ellipse,rgba(0,0,0,0.18) 0,transparent 70%);border-radius:50%;bottom:35px;right:40px}
+.shell{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;max-width:1300px;width:calc(100% - 4vw);height:calc(100% - 4vh);margin:auto;background:rgba(10,14,24,0.92);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.12);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.08)}
+.browser-chrome{height:80px;display:flex;align-items:center;gap:16px;padding:14px 22px;background:linear-gradient(180deg,rgba(40,45,60,0.8),rgba(30,35,50,0.8));border-bottom:1.5px solid rgba(255,255,255,0.08);backdrop-filter:blur(4px)}
+.time{font-size:1.1rem;font-weight:700;letter-spacing:0.04em;color:#fff;min-width:100px}
+.nav-btn{width:38px;height:38px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.06);color:#fff;font-size:1.8rem;line-height:1;cursor:pointer;transition:all .2s;display:grid;place-items:center}
+.nav-btn:hover{background:rgba(255,255,255,0.12);transform:scale(1.05)}
+.address-bar{flex:1;max-width:650px;height:48px;border-radius:24px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);display:flex;align-items:center;gap:12px;padding:0 18px;color:rgba(255,255,255,0.9);font-weight:700;margin:0 auto;transition:all .3s}
+.address-bar:focus-within{background:rgba(255,255,255,0.12);border-color:rgba(122,246,255,0.3);box-shadow:0 0 20px rgba(122,246,255,0.15)}
+.url-icon{font-size:1.2rem}
+.url-text{font-size:1.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-right{display:flex;gap:14px;align-items:center;min-width:160px}
+.battery{width:28px;height:16px;border:1.5px solid rgba(255,255,255,0.8);border-radius:4px;position:relative;overflow:hidden}
+.battery::after{content:'';position:absolute;height:100%;width:56%;background:#9bf0b2;left:2px;top:2px;border-radius:1px}
+.battery-tip{width:3px;height:9px;background:rgba(255,255,255,0.8);border-radius:1px;position:absolute;right:-3px;top:3.5px}
+.tabs-bar{height:54px;display:flex;gap:12px;padding:10px 24px 0;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;overflow-y:hidden}
+.tab{flex:0 0 220px;height:44px;border-radius:14px 14px 0 0;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.08);border-bottom:none;color:rgba(255,255,255,0.7);font-size:.95rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none}
+.tab:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.9)}
+.tab.active{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(122,246,255,0.3);box-shadow:inset 0 1px 0 rgba(255,255,255,0.1)}
+main{flex:1;overflow-y:auto;padding:22px 28px;background:rgba(14,22,36,0.7);position:relative}
+main::-webkit-scrollbar{width:8px}
+main::-webkit-scrollbar-track{background:transparent}
+main::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
+main::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.25)}
+.content-header{text-align:center;margin-bottom:28px}
+.quick-nav{display:flex;justify-content:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.quick-nav span{width:56px;height:56px;display:grid;place-items:center;border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;background:rgba(255,255,255,0.06);font-size:1.8rem;cursor:pointer;transition:all .2s;hover{transform:scale(1.08);background:rgba(255,255,255,0.12)}}
+.title-big{font-size:clamp(3.2rem,5vw,5.5rem);font-weight:900;letter-spacing:-0.01em;margin:20px 0 8px;text-shadow:0 4px 20px rgba(122,246,255,0.1)}
+.subtitle-text{font-size:1.3rem;color:rgba(255,255,255,0.68);font-weight:500;margin:0}
+.search-input{width:min(480px,92%);height:56px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.9);padding:0 22px;font-size:1.05rem;font-weight:600;text-align:center;margin:22px auto;display:block;transition:all .3s;cursor:text}
+.search-input:focus{outline:none;background:rgba(255,255,255,0.12);border-color:rgba(122,246,255,0.4);box-shadow:0 0 25px rgba(122,246,255,0.15)}
+.search-input::placeholder{color:rgba(255,255,255,0.5)}
+.section{display:none}
+.section.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.section-label{font-size:1rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);text-align:center;margin:28px 0 16px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;width:100%;max-width:1000px;margin:0 auto}
+.card{position:relative;min-height:175px;border:1.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;text-decoration:none;cursor:pointer;font-weight:700;overflow:hidden;transition:all .3s;user-select:none;background-size:120%;background-position:center}
+.card:hover{transform:translateY(-8px);border-color:rgba(255,255,255,0.25);box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 40px currentColor;filter:brightness(1.2)}
+.card:active{transform:translateY(-4px)}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1) 0%,transparent 100%);opacity:0;transition:opacity .3s;border-radius:20px}
+.card:hover::before{opacity:1}
+.card-emoji{font-size:3.5rem;text-shadow:0 6px 20px rgba(0,0,0,0.4);z-index:1}
+.card-label{font-size:1.05rem;letter-spacing:0.02em;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)}
+.game-memory{background:linear-gradient(135deg,#7dd8ff 0%,#5b9dff 50%,#5651ff 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.3)}
+.game-reaction{background:linear-gradient(135deg,#72e6ae 0%,#2bd998 50%,#1fa97f 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.25)}
+.game-guess{background:linear-gradient(135deg,#ff8a61 0%,#ff6b9d 50%,#c41e3a 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
+.game-click{background:linear-gradient(135deg,#d26aff 0%,#9b4dca 50%,#5c3d8a 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
+.app-youtube{background:linear-gradient(135deg,#ff3b30 0%,#ff1744 50%,#b71c1c 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.15)}
+.app-tiktok{background:linear-gradient(135deg,#000 0%,#161717 30%,#00f7ef 70%,#ff0050 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.15)}
+.app-discord{background:linear-gradient(135deg,#5865f2 0%,#4752d2 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
+.app-instagram{background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d92e7f 50%,#9b36b7 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
+.app-google{background:linear-gradient(135deg,#4285f4 0%,#34a853 25%,#fbbc04 50%,#ea4335 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.15)}
+.app-twitch{background:linear-gradient(135deg,#6441a5 0%,#9146ff 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
+.footer-bar{display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:32px auto 0;padding:0 18px;color:rgba(255,255,255,0.75);font-weight:700;font-size:1rem}
+.footer-icons{display:flex;gap:12px}
+.footer-icons button{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;transition:all .2s;font-size:1.1rem;display:grid;place-items:center}
+.footer-icons button:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);transform:scale(1.1)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:10;display:none;place-items:center;padding:20px;animation:fadeIn .2s}
+.modal-overlay.open{display:grid}
+.modal-box{width:min(700px,96vw);max-height:85vh;background:rgba(12,18,30,0.95);border:1.5px solid rgba(255,255,255,0.15);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 60px rgba(122,246,255,0.1);overflow:hidden;display:flex;flex-direction:column;backdrop-filter:blur(10px)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:22px 26px;border-bottom:1.5px solid rgba(255,255,255,0.08);background:rgba(30,40,55,0.8)}
+.modal-title{font-size:1.6rem;font-weight:800;letter-spacing:-0.01em}
+.close-btn{width:44px;height:44px;border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;background:rgba(255,255,255,0.06);color:#fff;font-size:1.8rem;cursor:pointer;transition:all .2s;display:grid;place-items:center;line-height:1}
+.close-btn:hover{background:rgba(255,0,0,0.3);border-color:rgba(255,100,100,0.4)}
+.modal-body{flex:1;overflow-y:auto;padding:28px;text-align:center}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0;max-width:400px;margin-left:auto;margin-right:auto}
+.card-game{aspect-ratio:1;border:1.5px solid rgba(255,255,255,0.15);border-radius:14px;background:linear-gradient(135deg,rgba(122,246,255,0.15),rgba(165,139,255,0.15));color:#fff;font-size:2.2rem;cursor:pointer;transition:all .2s;display:grid;place-items:center;user-select:none;font-weight:700}
+.card-game:hover{background:linear-gradient(135deg,rgba(122,246,255,0.25),rgba(165,139,255,0.25));border-color:rgba(122,246,255,0.4);transform:scale(1.05)}
+.card-game.matched{background:linear-gradient(135deg,rgba(113,255,185,0.3),rgba(113,255,185,0.2));border-color:rgba(113,255,185,0.5)}
+.action-btn{padding:14px 28px;border:1.5px solid rgba(255,255,255,0.2);border-radius:14px;background:linear-gradient(135deg,rgba(122,246,255,0.2),rgba(165,139,255,0.15));color:#fff;font-weight:700;cursor:pointer;font-size:1rem;transition:all .3s;margin:12px 0}
+.action-btn:hover{background:linear-gradient(135deg,rgba(122,246,255,0.3),rgba(165,139,255,0.25));border-color:rgba(122,246,255,0.4);transform:translateY(-2px)}
+.big-btn{width:160px;height:160px;border:2px solid rgba(255,255,255,0.2);border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));color:#fff;font-size:3rem;cursor:pointer;margin:30px auto;transition:all .2s;user-select:none;display:flex;align-items:center;justify-content:center}
+.big-btn:hover{transform:scale(1.08);border-color:rgba(122,246,255,0.3);background:linear-gradient(135deg,rgba(122,246,255,0.2),rgba(165,139,255,0.15))}
+.big-btn.ready{background:linear-gradient(135deg,rgba(113,255,185,0.4),rgba(113,255,185,0.25));border-color:rgba(113,255,185,0.6);box-shadow:0 0 30px rgba(113,255,185,0.3)}
+.input-number{width:200px;padding:14px 18px;border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;background:rgba(255,255,255,0.08);color:#fff;font-size:1.1rem;text-align:center;margin:16px auto;font-weight:700;transition:all .2s}
+.input-number:focus{outline:none;background:rgba(255,255,255,0.12);border-color:rgba(122,246,255,0.4);box-shadow:0 0 20px rgba(122,246,255,0.15)}
+.result-text{font-size:1.2rem;margin:16px 0;min-height:32px;color:rgba(255,255,255,0.9);font-weight:700}
+@media(max-width:1024px){.shell{margin:2vh auto;width:calc(100% - 2vw);height:calc(100% - 2vh)}.grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}}
+@media(max-width:768px){.browser-chrome{height:70px;padding:12px 16px}.time{min-width:80px;font-size:1rem}.address-bar{max-width:100%;height:44px}.status-right{font-size:.85rem}.tabs-bar{padding:8px 16px}.tab{flex:0 0 180px}.main{padding:16px 18px}.title-big{font-size:clamp(2.4rem,4vw,3.5rem)}.grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}.card-emoji{font-size:2.5rem}.card-label{font-size:.9rem}}
 </style>
 </head>
 <body>
-<div class="stars" id="stars"></div><div class="moon"></div>
+<div class="stars" id="stars"></div>
+<div class="moon"></div>
 <div class="shell">
-<header class="browser"><span class="time" id="time">9:25 PM</span><span class="back">‹</span><div class="address">◌ <span>ayaz-goat-arcade.github.io</span></div><span class="status"><i></i>online</span></header>
-<nav class="tabs"><div class="tab active" data-section="games">🎮 Games</div><div class="tab" data-section="apps">▣ Apps</div></nav>
-<main><div class="quick"><span>✦</span><span>＋</span><span>▣</span><span>⚙</span><span>＋</span></div><h1 class="heading" id="heading">games</h1><p class="sub" id="sub">loaded 4 games...</p><input class="search" id="search" placeholder="find what you want...">
-<section class="section active" id="games"><h2 class="section-title">your games</h2><div class="grid">
-<button class="card game-memory" data-game="memory"><b>🧩</b><label>Memory Match</label></button><button class="card game-reaction" data-game="reaction"><b>⚡</b><label>Reaction Test</label></button><button class="card game-guess" data-game="guess"><b>🎯</b><label>Secret Number</label></button><button class="card game-click" data-game="click"><b>👆</b><label>Click Challenge</label></button></div></section>
-<section class="section" id="apps"><h2 class="section-title">your apps</h2><div class="grid"><a class="card app-youtube" href="https://www.youtube.com" target="_blank" rel="noopener"><b>▶</b><label>YouTube</label></a><a class="card app-tiktok" href="https://www.tiktok.com" target="_blank" rel="noopener"><b>♪</b><label>TikTok</label></a><a class="card app-discord" href="https://discord.com" target="_blank" rel="noopener"><b>💬</b><label>Discord</label></a><a class="card app-instagram" href="https://www.instagram.com" target="_blank" rel="noopener"><b>◎</b><label>Instagram</label></a><a class="card app-google" href="https://www.google.com" target="_blank" rel="noopener"><b>G</b><label>Google</label></a></div></section>
-<div class="footer"><span>online users: 1455</span><span>⚙　◉</span></div></main></div>
-<div class="modal" id="modal"><div class="box"><button class="close" id="close">×</button><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
+<header class="browser-chrome">
+<span class="time" id="time">9:25 PM</span>
+<button class="nav-btn">‹</button>
+<div class="address-bar"><span class="url-icon">🔒</span><span class="url-text">ayaz-goat-arcade.github.io</span></div>
+<div class="status-right">
+<svg class="battery" viewBox="0 0 28 16"><rect x="1" y="1" width="22" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="24" y="5" width="2" height="6" rx="1" fill="currentColor"/><rect x="3" y="3" width="56%" height="10" rx="1" fill="currentColor" opacity="0.8"/></svg>
+<span>56%</span>
+</div>
+</header>
+<nav class="tabs-bar">
+<div class="tab active" data-section="games">🎮 Games</div>
+<div class="tab" data-section="apps">▣ Apps</div>
+<div class="tab">⭐ Trending</div>
+<div class="tab">🔥 Popular</div>
+</nav>
+<main>
+<div class="content-header">
+<div class="quick-nav"><span title="Menu">✦</span><span title="Add">＋</span><span title="Grid">▣</span><span title="Settings">⚙</span><span title="More">＋</span></div>
+<h1 class="title-big" id="heading">games</h1>
+<p class="subtitle-text" id="subtitle">loaded 224 games...</p>
+<input class="search-input" id="search" type="text" placeholder="find what you want...">
+</div>
+<section id="games" class="section active">
+<h2 class="section-label">Your Games</h2>
+<div class="grid">
+<button class="card game-memory" data-game="memory"><div class="card-emoji">🧩</div><div class="card-label">Memory Match</div></button>
+<button class="card game-reaction" data-game="reaction"><div class="card-emoji">⚡</div><div class="card-label">Reaction Test</div></button>
+<button class="card game-guess" data-game="guess"><div class="card-emoji">🎯</div><div class="card-label">Secret Number</div></button>
+<button class="card game-click" data-game="click"><div class="card-emoji">👆</div><div class="card-label">Click Challenge</div></button>
+</div>
+</section>
+<section id="apps" class="section">
+<h2 class="section-label">Your Apps</h2>
+<div class="grid">
+<a class="card app-youtube" href="https://www.youtube.com" target="_blank" rel="noopener"><div class="card-emoji">▶</div><div class="card-label">YouTube</div></a>
+<a class="card app-tiktok" href="https://www.tiktok.com" target="_blank" rel="noopener"><div class="card-emoji">♪</div><div class="card-label">TikTok</div></a>
+<a class="card app-discord" href="https://discord.com" target="_blank" rel="noopener"><div class="card-emoji">💬</div><div class="card-label">Discord</div></a>
+<a class="card app-instagram" href="https://www.instagram.com" target="_blank" rel="noopener"><div class="card-emoji">◎</div><div class="card-label">Instagram</div></a>
+<a class="card app-google" href="https://www.google.com" target="_blank" rel="noopener"><div class="card-emoji">G</div><div class="card-label">Google</div></a>
+<a class="card app-twitch" href="https://www.twitch.tv" target="_blank" rel="noopener"><div class="card-emoji">📺</div><div class="card-label">Twitch</div></a>
+</div>
+</section>
+<div class="footer-bar">
+<span>online users: 1455</span>
+<div class="footer-icons"><button>⚙</button><button>◉</button></div>
+</div>
+</main>
+</div>
+<div class="modal-overlay" id="modal">
+<div class="modal-box">
+<div class="modal-header"><h2 class="modal-title" id="modalTitle">Game</h2><button class="close-btn" id="close">×</button></div>
+<div class="modal-body" id="modalBody"></div>
+</div>
+</div>
 <script>
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);const modal=$('#modal'),body=$('#modalBody'),title=$('#modalTitle');
-for(let i=0;i<90;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';$('#stars').append(s)}
-function clock(){const d=new Date();$('#time').textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}clock();setInterval(clock,60000);
-$$('.tab').forEach(t=>t.onclick=()=>{const id=t.dataset.section;$$('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');$$('.section').forEach(x=>x.classList.toggle('active',x.id===id));$('#heading').textContent=id;$('#sub').textContent=id==='games'?'loaded 4 games...':'your favorite apps...';$('#search').value='' });
-$('#search').oninput=e=>{const q=e.target.value.toLowerCase();$$('.section.active .card').forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'flex':'none')};$('#close').onclick=()=>modal.classList.remove('open');modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open')};
-function show(t,html){title.textContent=t;body.innerHTML=html;modal.classList.add('open')}
-$$('[data-game]').forEach(b=>b.onclick=()=>games[b.dataset.game]());
-const games={memory(){const icons=['🎮','🎲','🕹️','👾','🚀','⭐','🎯','💎'];let deck=[...icons,...icons].sort(()=>Math.random()-.5),open=[],matches=0;show('Memory Match','<p>Find all 8 pairs.</p><div class="board">'+deck.map((_,i)=>`<button class="memory" data-i="${i}">?</button>`).join('')+'</div><p id="result">Matches: 0/8</p>');$$('.memory').forEach(b=>b.onclick=()=>{let i=+b.dataset.i;if(open.some(x=>x.i===i)||open.length===2)return;b.textContent=deck[i];open.push({i,b});if(open.length===2){if(deck[open[0].i]===deck[open[1].i]){matches++;open.forEach(x=>x.b.disabled=true);open=[];$('#result').textContent=`Matches: ${matches}/8`}else setTimeout(()=>{open.forEach(x=>x.b.textContent='?');open=[]},600)}})},reaction(){show('Reaction Test','<p>Wait for green, then click!</p><button class="big-action" id="react">Start</button><p id="rout"></p>');let start,armed=false;$('#react').onclick=()=>{if(!armed){armed=true;$('#react').textContent='Wait...';setTimeout(()=>{start=performance.now();$('#react').classList.add('ready');$('#react').textContent='CLICK!'},1000+Math.random()*2000)}else{$('#rout').textContent=`Your time: ${Math.round(performance.now()-start)} ms`;armed=false;$('#react').classList.remove('ready');$('#react').textContent='Try again'}}},guess(){let n=Math.floor(Math.random()*100)+1,tr=0;show('Secret Number','<p>Guess a number from 1 to 100.</p><input class="number" id="num" type="number" min="1" max="100"><button class="action" id="guess">Guess</button><p id="gout">Tries: 0</p>');$('#guess').onclick=()=>{const v=+$('#num').value;tr++;$('#gout').textContent=v===n?`Correct in ${tr} tries! 🎉`:v<n?'Too low — try higher.':`Too high — try lower.`}},click(){let score=0;show('Click Challenge','<p>Click as many times as possible in 10 seconds.</p><button class="big-action" id="clicker">0</button><p id="cout">10 seconds left</p>');const end=Date.now()+10000;const timer=setInterval(()=>{let left=Math.max(0,Math.ceil((end-Date.now())/1000));$('#cout').textContent=left?`${left} seconds left`:`Final score: ${score}`;if(!left){clearInterval(timer);$('#clicker').disabled=true}},200);$('#clicker').onclick=()=>{if(Date.now()<end){score++;$('#clicker').textContent=score}}}};
-</script></body></html>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+function generateStars(){const container=$('#stars');for(let i=0;i<120;i++){const star=document.createElement('div');star.className='star';star.style.left=Math.random()*100+'%';star.style.top=Math.random()*100+'%';star.style.setProperty('--delay',Math.random()*3+'s');container.appendChild(star)}}
+function updateClock(){const d=new Date();let h=d.getHours(),m=String(d.getMinutes()).padStart(2,'0'),p=h>=12?'PM':'AM';h=h%12||12;$('#time').textContent=`${h}:${m} ${p}`}
+updateClock();setInterval(updateClock,60000);
+$$('.tab').forEach(tab=>tab.addEventListener('click',function(){const id=this.dataset.section;if(!id)return;$$('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');$$('.section').forEach(s=>s.classList.toggle('active',s.id===id));const names={games:'games',apps:'your apps',trending:'trending',popular:'popular'};$('#heading').textContent=id||'games';$('#subtitle').textContent=id==='games'?'loaded 224 games...':'favorite apps...'}));
+$('#search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$('.section.active .card').forEach(c=>{const text=c.textContent.toLowerCase();c.style.display=text.includes(q)?'flex':'none'})});
+$('#close').addEventListener('click',()=>$('#modal').classList.remove('open'));
+$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))$('#modal').classList.remove('open')});
+function showModal(title,html){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=html;$('#modal').classList.add('open')}
+const games={memory(){const emoji=['🎮','🎲','🕹️','👾','🚀','⭐','🎯','💎'];let deck=[...emoji,...emoji].sort(()=>Math.random()-.5),flipped=[],matched=0;showModal('Memory Match',`<p style="color:rgba(255,255,255,0.8);margin:16px 0">Find all 8 pairs</p><div class="board">${deck.map((_,i)=>`<button class="card-game" data-i="${i}">?</button>`).join('')}</div><p class="result-text" id="result">Matches: <strong>0/8</strong></p>`);$$('.card-game').forEach(btn=>btn.addEventListener('click',function(){const i=+this.dataset.i;if(flipped.some(x=>x.i===i)||flipped.length===2)return;this.textContent=deck[i];flipped.push({i,btn:this});if(flipped.length===2){if(deck[flipped[0].i]===deck[flipped[1].i]){matched++;[flipped[0].btn,flipped[1].btn].forEach(b=>b.classList.add('matched'));flipped=[];$('#result').innerHTML=`Matches: <strong>${matched}/8</strong>`}else setTimeout(()=>{flipped.forEach(x=>x.btn.textContent='?');flipped=[]},600)}}))},reaction(){showModal('Reaction Test','<p style="color:rgba(255,255,255,0.8);margin:16px 0">Wait for green, then click as fast as you can!</p><button class="big-btn" id="react">Start</button><div class="result-text" id="rtime"></div>');let start,ready=false;$('#react').addEventListener('click',function(){if(!ready){ready=true;this.textContent='...';setTimeout(()=>{start=Date.now();this.classList.add('ready');this.textContent='CLICK!'},1000+Math.random()*2000)}else{const time=Math.round(Date.now()-start);$('#rtime').innerHTML=`⚡ <strong>${time}ms</strong> - ${time<250?'Lightning!':time<350?'Awesome!':'Great!'}`;ready=false;this.classList.remove('ready');this.textContent='Again?'}})},guess(){let n=Math.floor(Math.random()*100)+1,tries=0;showModal('Secret Number',`<p style="color:rgba(255,255,255,0.8);margin:16px 0">Guess the number (1-100)</p><input class="input-number" id="num" type="number" min="1" max="100"><button class="action-btn" id="gbtn">Guess</button><div class="result-text" id="gres">Tries: 0</div>`);$('#gbtn').addEventListener('click',()=>{const v=+$('#num').value;if(!v)return;tries++;const msg=v===n?`🎉 <strong>Correct in ${tries} tries!</strong>`:v<n?'📈 Too low':'📉 Too high';$('#gres').innerHTML=msg;if(v===n)$('#gbtn').disabled=true})},click(){let score=0;const end=Date.now()+10000;showModal('Click Challenge','<p style="color:rgba(255,255,255,0.8);margin:16px 0">Click as many times as possible in 10 seconds</p><button class="big-btn" id="clicker">0</button><div class="result-text" id="ctime">10 seconds</div>');const timer=setInterval(()=>{const left=Math.ceil((end-Date.now())/1000);$('#ctime').textContent=left>0?`${left} seconds left`:`Final: ${score} clicks!`;if(left<=0){clearInterval(timer);$('#clicker').disabled=true}},100);$('#clicker').addEventListener('click',()=>{if(Date.now()<end){score++;$('#clicker').textContent=score}})}};
+$$('[data-game]').forEach(btn=>btn.addEventListener('click',()=>games[btn.dataset.game]()));
+generateStars();
+</script>
+</body>
+</html>
