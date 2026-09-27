@@ -3,22 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ayaz Arcade</title>
+    <title>Games Portal</title>
     <style>
       :root {
-        --bg-deep: #070d19;
-        --bg-mid: #111d31;
-        --panel: rgba(14, 23, 35, 0.72);
-        --panel-strong: rgba(31, 38, 48, 0.8);
-        --panel-soft: rgba(255,255,255,0.06);
-        --border: rgba(255,255,255,0.08);
+        --bg-0: #050b14;
+        --bg-1: #0b1420;
+        --bg-2: #111d2d;
+        --chrome: rgba(22,27,34,0.78);
+        --chrome-2: rgba(255,255,255,0.04);
+        --panel: rgba(20,28,38,0.62);
+        --panel-2: rgba(18,25,34,0.8);
         --text: #edf5ff;
-        --muted: rgba(237,245,255,0.78);
-        --soft: rgba(255,255,255,0.4);
-        --green: #8ef0b0;
-        --yellow: #f7d46e;
-        --red: #ff7c7c;
-        --blue: #7ec8ff;
+        --muted: rgba(237,245,255,0.7);
+        --soft: rgba(255,255,255,0.06);
+        --soft-2: rgba(255,255,255,0.12);
+        --green: #96f0b0;
       }
 
       * { box-sizing: border-box; }
@@ -37,29 +36,29 @@
         display: grid;
         place-items: center;
         background:
-          radial-gradient(circle at 50% 10%, rgba(87, 128, 180, 0.22), transparent 26%),
-          linear-gradient(180deg, #020813 0%, #090f1b 100%);
+          radial-gradient(circle at center, rgba(111, 125, 170, 0.10), transparent 34%),
+          linear-gradient(180deg, #000 0%, #070d16 100%);
       }
 
-      .browser-shell {
-        position: relative;
-        width: min(92vw, 1120px);
-        height: min(86vh, 860px);
-        background: rgba(9, 16, 25, 0.96);
-        border: 1px solid rgba(255,255,255,0.08);
+      .frame {
+        width: min(92vw, 1180px);
+        height: min(90vh, 760px);
         border-radius: 18px;
-        box-shadow: 0 26px 60px rgba(0,0,0,0.7);
+        background: rgba(15, 21, 31, 0.92);
+        border: 1px solid rgba(255,255,255,0.08);
         overflow: hidden;
+        box-shadow: 0 22px 64px rgba(0,0,0,0.7);
+        position: relative;
       }
 
-      .browser-shell::before {
+      .frame::before {
         content: "";
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(circle, rgba(255,255,255,0.25) 0.8px, transparent 1px) 0 0 / 18px 18px,
-          radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.3px) 9px 9px / 18px 18px;
-        opacity: 0.22;
+          radial-gradient(circle, rgba(255,255,255,0.28) 0.8px, transparent 1.1px) 0 0 / 18px 18px,
+          radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.4px) 9px 9px / 18px 18px;
+        opacity: 0.24;
         pointer-events: none;
       }
 
@@ -67,105 +66,92 @@
         position: relative;
         z-index: 2;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        gap: 16px;
-        padding: 12px 18px 14px;
-        background: rgba(25, 27, 34, 0.7);
-        border-bottom: 1px solid rgba(255,255,255,0.07);
+        justify-content: space-between;
+        gap: 12px;
+        height: 74px;
+        padding: 12px 18px 10px;
+        background: rgba(31, 33, 38, 0.75);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
       }
 
-      .status-left {
+      .status-left, .status-right {
         display: flex;
         align-items: center;
         gap: 12px;
-        min-width: 180px;
+        width: 180px;
       }
 
-      .time-wrap {
-        font-size: 1.05rem;
-        letter-spacing: 0.02em;
+      .status-right {
+        justify-content: flex-end;
+      }
+
+      .time {
+        font-size: 1.03rem;
         font-weight: 700;
+        letter-spacing: 0.03em;
+        color: rgba(255,255,255,0.92);
+      }
+
+      .back-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        display: grid;
+        place-items: center;
+        font-size: 1.7rem;
+        line-height: 1;
         color: rgba(255,255,255,0.9);
       }
 
-      .browser-tools {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-left: auto;
-        margin-right: 8px;
-      }
-
-      .nav-button {
-        width: 32px;
-        height: 32px;
-        display: grid;
-        place-items: center;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        background: rgba(255,255,255,0.04);
-        color: var(--text);
-        font-size: 1.2rem;
-        cursor: default;
-      }
-
-      .nav-button.back {
-        font-size: 1.8rem;
-        line-height: 1;
-      }
-
-      .address-bar {
+      .address {
         flex: 1;
-        max-width: 560px;
-        min-width: 180px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        max-width: 540px;
+        height: 42px;
         border-radius: 18px;
         border: 1px solid rgba(255,255,255,0.06);
-        background: rgba(255,255,255,0.05);
-        padding: 0 14px;
-        margin: 0 auto;
+        background: rgba(255,255,255,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 12px;
+        color: rgba(255,255,255,0.8);
+        font-weight: 700;
       }
 
-      .url-icon {
-        font-size: 1.15rem;
+      .address .icon {
+        font-size: 1rem;
       }
 
-      .url-text {
-        flex: 1;
-        font-size: 1.1rem;
-        color: var(--muted);
+      .address .text {
+        font-size: 1.05rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      .toolbar-right {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .tiny-pill {
+      .tiny-flag {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
         padding: 5px 10px;
         border-radius: 999px;
         background: rgba(255,255,255,0.08);
         border: 1px solid rgba(255,255,255,0.08);
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 700;
       }
 
-      .dot {
+      .tiny-flag .dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
+        background: var(--green);
         display: inline-block;
-        background: #8ef0b0;
+        margin-right: 6px;
       }
 
       .toolbar {
@@ -173,266 +159,233 @@
         z-index: 2;
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 18px 20px 0;
+        gap: 10px;
+        padding: 10px 22px 0;
       }
 
-      .browser-tab {
+      .tab {
         flex: 1;
-        max-width: 260px;
-        height: 38px;
+        max-width: 240px;
+        height: 40px;
         border-radius: 16px 16px 0 0;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.04);
+        background: rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.78);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgba(255,255,255,0.8);
-        font-weight: 700;
         font-size: 0.95rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .browser-tab.active {
+      .tab.active {
         background: rgba(255,255,255,0.08);
       }
 
-      .browser-panel {
+      .main {
         position: relative;
         z-index: 2;
-        margin: 8px 26px 24px;
+        margin: 8px 26px 18px;
         border-radius: 18px;
-        background: rgba(18, 28, 38, 0.58);
+        background: rgba(16, 25, 35, 0.58);
         border: 1px solid rgba(255,255,255,0.08);
-        padding: 18px 18px 16px;
-        min-height: 600px;
+        height: calc(100% - 150px);
+        min-height: 530px;
+        padding: 20px 18px 18px;
       }
 
-      .finder-row {
+      .quick-row {
         display: flex;
         justify-content: center;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 20px;
+        gap: 16px;
+        margin-top: 8px;
       }
 
-      .finder-pill {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        width: 56px;
-        height: 56px;
-        border-radius: 18px;
+      .quick-item {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.06);
-        color: var(--text);
         font-size: 1.8rem;
       }
 
-      .app-title {
+      .title {
         text-align: center;
-        margin: 8px 0 0;
-        font-size: clamp(2.8rem, 3vw, 4rem);
-        font-weight: 900;
+        font-size: clamp(3rem, 3.8vw, 4.4rem);
         letter-spacing: 0.02em;
-        color: rgba(255,255,255,0.96);
+        font-weight: 900;
+        margin: 26px 0 8px;
       }
 
-      .app-subtitle {
+      .subtitle {
         text-align: center;
-        margin-top: 10px;
         color: rgba(255,255,255,0.72);
-        font-size: clamp(1.2rem, 1.7vw, 2rem);
-        font-weight: 600;
+        font-size: clamp(1.4rem, 2vw, 2.1rem);
+        font-weight: 500;
+        margin: 0;
       }
 
-      .app-grid {
-        width: min(730px, 100%);
-        margin: 24px auto 0;
+      .search {
+        width: min(420px, 82%);
+        height: 54px;
+        border-radius: 18px;
+        margin: 22px auto 10px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.7);
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .grid {
+        width: min(760px, 90%);
+        margin: 22px auto 0;
         display: grid;
-        grid-template-columns: repeat(5, minmax(120px, 1fr));
-        gap: 14px 14px;
+        grid-template-columns: repeat(5, minmax(122px, 1fr));
+        gap: 14px 18px;
       }
 
-      .game-tile {
-        position: relative;
-        height: 145px;
+      .tile {
+        height: 158px;
         border-radius: 18px;
         border: 1px solid rgba(255,255,255,0.08);
+        position: relative;
         overflow: hidden;
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 12px 18px rgba(0,0,0,0.18);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 12px 18px rgba(0,0,0,0.18);
       }
 
-      .game-tile:nth-child(1) { background: linear-gradient(135deg, #98e77a, #8bc46b); }
-      .game-tile:nth-child(2) { background: linear-gradient(135deg, #f1d77a, #ffc35d); }
-      .game-tile:nth-child(3) { background: linear-gradient(135deg, #7a75ff, #3092f7); }
-      .game-tile:nth-child(4) { background: linear-gradient(135deg, #61c8ff, #7f5aff); }
-      .game-tile:nth-child(5) { background: linear-gradient(135deg, #0f7ae4, #4bb5ff); }
-      .game-tile:nth-child(6) { background: linear-gradient(135deg, #ff7a62, #ffb565); }
-      .game-tile:nth-child(7) { background: linear-gradient(135deg, #8a8cff, #4d62ff); }
-      .game-tile:nth-child(8) { background: linear-gradient(135deg, #fd6b8a, #ff9a5d); }
+      .tile:nth-child(1) { background: linear-gradient(135deg, #9be87d, #7bbf43); }
+      .tile:nth-child(2) { background: linear-gradient(135deg, #f6d468, #f9b848); }
+      .tile:nth-child(3) { background: linear-gradient(135deg, #9b9bff, #6a7ef8); }
+      .tile:nth-child(4) { background: linear-gradient(135deg, #8bd5ff, #5aaef7); }
+      .tile:nth-child(5) { background: linear-gradient(135deg, #3ea7ff, #5c59ef); }
+      .tile:nth-child(6) { background: linear-gradient(135deg, #ffb36d, #ff7b5a); }
+      .tile:nth-child(7) { background: linear-gradient(135deg, #8db1ff, #5f6dff); }
+      .tile:nth-child(8) { background: linear-gradient(135deg, #ff7d71, #ff9b54); }
+      .tile:nth-child(9) { background: linear-gradient(135deg, #9ad1ff, #39a4ff); }
+      .tile:nth-child(10) { background: linear-gradient(135deg, #f1718d, #ff7d5f); }
 
-      .tile-face {
+      .tile-inner {
         position: absolute;
         inset: 0;
         display: grid;
         place-items: center;
+        font-size: clamp(2.8rem, 3vw, 4rem);
         font-weight: 900;
-        color: rgba(255,255,255,0.96);
-        text-shadow: 0 6px 20px rgba(0,0,0,0.17);
+        color: rgba(255,255,255,0.98);
+        text-shadow: 0 8px 20px rgba(0,0,0,0.18);
       }
 
-      .tile-emoji {
-        font-size: clamp(2.7rem, 3vw, 4rem);
-      }
-
-      .tile-text {
-        font-size: clamp(1.1rem, 1.5vw, 1.6rem);
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-      }
-
-      .tile-text.small {
-        font-size: 1rem;
-      }
-
-      .search-box {
-        width: min(430px, 88%);
-        height: 56px;
-        margin: 22px auto 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 18px;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.07);
-        color: rgba(255,255,255,0.7);
-        font-size: clamp(1rem, 1.4vw, 1.5rem);
-        font-weight: 700;
-      }
-
-      .footer-bar {
+      .bot {
         position: absolute;
         left: 50%;
         bottom: 20px;
         transform: translateX(-50%);
-        width: min(540px, 74%);
+        width: min(540px, 72%);
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 14px;
-        font-size: 1rem;
-        color: rgba(255,255,255,0.8);
+        color: rgba(255,255,255,0.75);
       }
 
-      .online-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
+      .online {
         font-weight: 700;
+        font-size: 0.95rem;
       }
 
-      .icon-set {
+      .set {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
 
-      .round-btn {
+      .set .round {
         width: 34px;
         height: 34px;
         display: grid;
         place-items: center;
         border-radius: 50%;
-        border: 1px solid rgba(255,255,255,0.08);
         background: rgba(255,255,255,0.05);
-        color: var(--text);
-        font-size: 1.1rem;
+        border: 1px solid rgba(255,255,255,0.08);
       }
 
-      @media (max-width: 800px) {
-        .browser-shell {
-          width: 100vw;
-          height: 100vh;
-          border-radius: 0;
-        }
-
-        .address-bar {
-          max-width: 320px;
-        }
-
-        .app-grid {
-          grid-template-columns: repeat(2, minmax(120px, 1fr));
-        }
-
-        .browser-panel {
-          min-height: auto;
-          padding-bottom: 80px;
-        }
+      @media (max-width: 880px) {
+        .frame { width: 100vw; height: 100vh; border-radius: 0; }
+        .grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+        .toolbar { overflow-x: auto; }
+        .tab { min-width: 170px; }
       }
     </style>
   </head>
   <body>
-    <div class="browser-shell">
+    <div class="frame">
       <div class="topbar">
         <div class="status-left">
-          <div class="time-wrap">9:25 PM</div>
+          <div class="time">9:25 PM</div>
         </div>
 
-        <div class="browser-tools">
-          <div class="nav-button back">‹</div>
+        <div class="back-btn">‹</div>
+
+        <div class="address">
+          <span class="icon">◌</span>
+          <span class="text">anv-ims-lms.22web.org</span>
         </div>
 
-        <div class="address-bar">
-          <span class="url-icon">⚙</span>
-          <div class="url-text">anv-ims-lms.22web.org</div>
-        </div>
-
-        <div class="toolbar-right">
-          <div class="tiny-pill"><span class="dot"></span> 56%</div>
+        <div class="status-right">
+          <div class="tiny-flag"><span class="dot"></span> 56%</div>
         </div>
       </div>
 
       <div class="toolbar">
-        <div class="browser-tab">Music Genres and C...</div>
-        <div class="browser-tab active">Google</div>
-        <div class="browser-tab">Study.com | Math</div>
-        <div class="browser-tab">IXL | Math, Language...</div>
+        <div class="tab">Music Genres and C...</div>
+        <div class="tab active">Google</div>
+        <div class="tab">Study.com | Math</div>
+        <div class="tab">IXL | Math, Language...</div>
       </div>
 
-      <div class="browser-panel">
-        <div class="finder-row">
-          <div class="finder-pill">✦</div>
-          <div class="finder-pill">＋</div>
-          <div class="finder-pill">▣</div>
-          <div class="finder-pill">⚙</div>
-          <div class="finder-pill">＋</div>
+      <div class="main">
+        <div class="quick-row">
+          <div class="quick-item">✦</div>
+          <div class="quick-item">＋</div>
+          <div class="quick-item">▣</div>
+          <div class="quick-item">⚙</div>
+          <div class="quick-item">＋</div>
         </div>
 
-        <h1 class="app-title">games</h1>
-        <div class="app-subtitle">loaded 224 games...</div>
+        <h1 class="title">games</h1>
+        <p class="subtitle">loaded 224 games...</p>
 
-        <div class="search-box">find what you want...</div>
+        <div class="search">find what you want...</div>
 
-        <div class="app-grid">
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🧩</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎮</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🌌</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🏔️</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎯</span></div></div>
+        <div class="grid">
+          <div class="tile"><div class="tile-inner">🎮</div></div>
+          <div class="tile"><div class="tile-inner">🎯</div></div>
+          <div class="tile"><div class="tile-inner">🌌</div></div>
+          <div class="tile"><div class="tile-inner">🏔️</div></div>
+          <div class="tile"><div class="tile-inner">🚀</div></div>
 
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🦕</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🚀</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">👾</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🎲</span></div></div>
-          <div class="game-tile"><div class="tile-face"><span class="tile-emoji">🧠</span></div></div>
+          <div class="tile"><div class="tile-inner">🦕</div></div>
+          <div class="tile"><div class="tile-inner">🎲</div></div>
+          <div class="tile"><div class="tile-inner">👾</div></div>
+          <div class="tile"><div class="tile-inner">🧠</div></div>
+          <div class="tile"><div class="tile-inner">🎧</div></div>
         </div>
 
-        <div class="footer-bar">
-          <div class="online-badge">online users: 1455</div>
-          <div class="icon-set">
-            <div class="round-btn">⚙</div>
-            <div class="round-btn">◌</div>
+        <div class="bot">
+          <div class="online">online users: 1455</div>
+          <div class="set">
+            <div class="round">⚙</div>
+            <div class="round">◌</div>
           </div>
         </div>
       </div>
