@@ -3,81 +3,601 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ayaz's Arcade</title>
-    <meta name="description" content="Ayaz's arcade app launcher" />
-    <link rel="stylesheet" href="styles.css" />
+    <title>Ayaz Arcade</title>
+    <meta name="description" content="Ayaz's mini game arcade" />
+    <style>
+      :root {
+        --bg: #070d17;
+        --bg-2: #101a2d;
+        --panel: rgba(18, 27, 42, 0.86);
+        --panel-soft: rgba(24, 35, 55, 0.7);
+        --border: rgba(122, 246, 255, 0.45);
+        --accent: #7af6ff;
+        --accent-2: #a58bff;
+        --accent-3: #ff6cc8;
+        --success: #71ffb9;
+        --danger: #ff7d7d;
+        --text: #edf6ff;
+        --muted: #afc5e6;
+        --shadow: rgba(0, 0, 0, 0.38);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(165,139,255,0.18), transparent 28%),
+          linear-gradient(180deg, #040b15 0%, #090f1d 100%);
+        color: var(--text);
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 28px 16px;
+      }
+
+      body.light-mode {
+        --bg: #edf5ff;
+        --bg-2: #dfeaff;
+        --panel: rgba(255,255,255,0.9);
+        --panel-soft: rgba(233, 240, 255, 0.9);
+        --border: rgba(80, 121, 255, 0.3);
+        --accent: #0e6cff;
+        --accent-2: #7d5cf5;
+        --accent-3: #ff55ae;
+        --success: #0aa869;
+        --danger: #d94b4b;
+        --text: #10213d;
+        --muted: #4f6283;
+        --shadow: rgba(64, 88, 128, 0.18);
+      }
+
+      .arcade-app {
+        width: min(1180px, 100%);
+        background: rgba(6, 11, 20, 0.55);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 28px;
+        box-shadow: 0 28px 60px var(--shadow);
+        overflow: hidden;
+      }
+
+      body.light-mode .arcade-app {
+        background: rgba(255,255,255,0.45);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        background: rgba(255,255,255,0.02);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .brand {
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 1rem;
+        color: var(--accent);
+      }
+
+      .top-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .toggle-btn,
+      .ghost-btn,
+      .primary-btn,
+      .reaction-btn,
+      .guess-btn,
+      .mini-btn {
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        color: var(--text);
+        background: rgba(255,255,255,0.04);
+        cursor: pointer;
+        transition: transform 0.18s ease, opacity 0.18s ease;
+      }
+
+      .toggle-btn:hover,
+      .ghost-btn:hover,
+      .primary-btn:hover,
+      .reaction-btn:hover,
+      .guess-btn:hover,
+      .mini-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .toggle-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+      }
+
+      .content-wrap {
+        padding: 24px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.3fr 0.9fr;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .panel {
+        background: linear-gradient(135deg, var(--panel), var(--panel-soft));
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 22px;
+        box-shadow: 0 16px 28px rgba(0,0,0,0.18);
+      }
+
+      .profile-panel {
+        padding: 22px;
+      }
+
+      .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .eyebrow {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+
+      .player-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .player-input {
+        flex: 1;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        color: var(--text);
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+
+      .primary-btn,
+      .ghost-btn,
+      .guess-btn,
+      .mini-btn {
+        padding: 12px 16px;
+        font-weight: 700;
+      }
+
+      .primary-btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border: none;
+        color: #071521;
+      }
+
+      .player-name {
+        margin-top: 12px;
+        font-size: clamp(1.6rem, 2vw, 2.1rem);
+        font-weight: 800;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 16px 14px;
+        min-height: 110px;
+      }
+
+      .stat-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .stat-card strong {
+        display: block;
+        margin-top: 14px;
+        font-size: clamp(1.4rem, 2vw, 2rem);
+      }
+
+      .games-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 18px;
+      }
+
+      .game-panel {
+        padding: 18px;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .panel-header h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .mini-btn {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+      }
+
+      .memory-board {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(52px, 1fr));
+        gap: 12px;
+      }
+
+      .memory-card {
+        aspect-ratio: 1 / 1;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(122,246,255,0.08), rgba(165,139,255,0.16));
+        font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+        color: var(--text);
+        cursor: pointer;
+        transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .memory-card:hover {
+        transform: translateY(-1px);
+      }
+
+      .memory-card.is-flipped,
+      .memory-card.is-matched {
+        background: linear-gradient(135deg, rgba(122,246,255,0.2), rgba(165,139,255,0.26));
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+      }
+
+      .score-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        gap: 8px;
+      }
+
+      .score-value {
+        font-size: 1.3rem;
+        font-weight: 800;
+      }
+
+      .combo-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 72px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(122, 246, 255, 0.12);
+        border: 1px solid rgba(122,246,255,0.28);
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      .status-text {
+        margin-top: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        min-height: 48px;
+      }
+
+      .status-text.success {
+        color: var(--success);
+      }
+
+      .status-text.danger {
+        color: var(--danger);
+      }
+
+      .side-stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .reaction-btn {
+        width: 100%;
+        min-height: 140px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .reaction-btn.waiting {
+        background: linear-gradient(135deg, rgba(255,201,87,0.18), rgba(255,160,72,0.12));
+        border-color: rgba(255,170,64,0.32);
+      }
+
+      .reaction-btn.ready {
+        background: linear-gradient(135deg, rgba(113,255,185,0.28), rgba(87,177,255,0.18));
+        border-color: rgba(113,255,185,0.38);
+      }
+
+      .guess-wrap {
+        display: flex;
+        gap: 10px;
+      }
+
+      .guess-input {
+        flex: 1;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        color: var(--text);
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+
+      .guess-btn {
+        background: linear-gradient(135deg, var(--accent-3), #ff8a65);
+        border: none;
+        color: #fff;
+      }
+
+      .leaderboard {
+        margin-top: 18px;
+        padding: 18px;
+      }
+
+      .leaderboard h3 {
+        margin: 0 0 12px;
+        font-size: 0.82rem;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      .leaderboard ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 10px;
+      }
+
+      .leaderboard li {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: var(--text);
+      }
+
+      .game-log {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .game-log li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.03);
+        border-left: 4px solid rgba(122,246,255,0.7);
+        border-radius: 10px;
+        padding: 12px 14px;
+      }
+
+      .game-log li[data-tone="alert"] {
+        border-left-color: rgba(255,125,125,0.8);
+      }
+
+      .game-log li[data-tone="good"] {
+        border-left-color: rgba(113,255,185,0.8);
+      }
+
+      .game-log strong {
+        font-size: 0.95rem;
+      }
+
+      .game-log span {
+        color: var(--muted);
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+
+      .toolbar {
+        margin-top: 18px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 26px;
+        left: 50%;
+        transform: translateX(-50%) translateY(16px);
+        opacity: 0;
+        pointer-events: none;
+        background: rgba(9, 16, 25, 0.9);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+        padding: 10px 18px;
+        font-weight: 700;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .games-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .topbar {
+          padding: 16px 18px;
+        }
+
+        .content-wrap {
+          padding: 16px;
+        }
+
+        .player-row,
+        .guess-wrap {
+          flex-direction: column;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="screen-shell">
-      <div class="top-strip">
-        <div class="brand-badge">✦</div>
-        <div class="tool-row">
-          <button class="tool-btn" type="button" aria-label="Open utilities">＋</button>
-          <button class="tool-btn" type="button" aria-label="Open apps">▣</button>
-          <button class="tool-btn" type="button" aria-label="Open settings">⚙</button>
+    <div class="arcade-app">
+      <header class="topbar">
+        <div class="brand">Ayaz Arcade</div>
+        <div class="top-actions">
+          <button id="soundBtn" class="toggle-btn" type="button" aria-label="Toggle sound">🔊</button>
+          <button id="themeBtn" class="toggle-btn" type="button" aria-label="Toggle theme">☀️</button>
         </div>
-      </div>
+      </header>
 
-      <main class="app-panel">
-        <h1 class="panel-title" id="panelTitle">apps</h1>
+      <div class="content-wrap">
+        <section class="hero">
+          <div class="panel profile-panel">
+            <div class="profile-header">
+              <span class="eyebrow">Player Profile</span>
+            </div>
 
-        <div class="search-box" aria-label="Search">find what you want...</div>
+            <div class="player-row">
+              <input id="playerNameInput" class="player-input" type="text" value="Ayaz Rider" aria-label="Player name" />
+              <button id="saveNameBtn" class="primary-btn" type="button">Save</button>
+            </div>
 
-        <div class="tile-grid" id="tileGrid">
-          <article class="app-tile tile-chatgpt" aria-label="ChatGPT">
-            <div class="tile-logo chatgpt">◌</div>
-          </article>
+            <div id="playerNameLabel" class="player-name">Ayaz Rider</div>
+          </div>
 
-          <article class="app-tile tile-discord" aria-label="Discord">
-            <div class="tile-logo discord">◉</div>
-          </article>
+          <div class="stats-grid">
+            <div class="panel stat-card">
+              <span>Best Memory</span>
+              <strong id="topScore">0</strong>
+            </div>
+            <div class="panel stat-card">
+              <span>Best Reflex</span>
+              <strong id="reactionScore">0 ms</strong>
+            </div>
+            <div class="panel stat-card">
+              <span>Wins</span>
+              <strong id="guessScore">0</strong>
+            </div>
+            <div class="panel stat-card">
+              <span>Best Streak</span>
+              <strong id="bestStreak">0</strong>
+            </div>
+          </div>
+        </section>
 
-          <article class="app-tile tile-nvidia" aria-label="NVIDIA">
-            <div class="tile-logo nvidia">◍</div>
-          </article>
+        <div class="games-grid">
+          <section class="panel game-panel">
+            <div class="panel-header">
+              <h3>Memory Match</h3>
+              <button id="memoryResetBtn" class="mini-btn" type="button">Shuffle</button>
+            </div>
 
-          <article class="app-tile tile-android" aria-label="Android">
-            <div class="tile-logo android">◐</div>
-          </article>
+            <div id="memoryBoard" class="memory-board" aria-label="Memory match board"></div>
 
-          <article class="app-tile tile-movies" aria-label="Movies">
-            <div class="tile-text movies">movies</div>
-          </article>
+            <div class="score-row">
+              <div id="memoryScore" class="score-value">0 pts</div>
+              <div id="comboMeter" class="combo-pill">x1</div>
+            </div>
 
-          <article class="app-tile tile-tiktok" aria-label="TikTok">
-            <div class="tile-logo tiktok">♪</div>
-          </article>
+            <p id="memoryStatus" class="status-text">Find all 8 pairs with as few flips as possible.</p>
+          </section>
 
-          <article class="app-tile tile-youtube" aria-label="YouTube">
-            <div class="tile-logo youtube">▶</div>
-          </article>
+          <div class="side-stack">
+            <section class="panel game-panel">
+              <div class="panel-header">
+                <h3>Reaction Test</h3>
+              </div>
 
-          <article class="app-tile tile-vscode" aria-label="VS Code">
-            <div class="tile-logo vscode">&lt;/&gt;</div>
-          </article>
-        </div>
+              <button id="reactionBtn" class="reaction-btn" type="button">Press to start</button>
+              <div class="score-row">
+                <div id="reactionTime" class="score-value">0 ms</div>
+              </div>
+              <p id="reactionStatus" class="status-text">Wait for the green signal.</p>
+            </section>
 
-        <div class="footer-status">
-          <span>online users: 1455</span>
-          <div class="footer-icons">
-            <button class="mini-icon" type="button" aria-label="Settings">⚙</button>
-            <button class="mini-icon" type="button" aria-label="Profile">◔</button>
+            <section class="panel game-panel">
+              <div class="panel-header">
+                <h3>Secret Number</h3>
+              </div>
+
+              <div class="guess-wrap">
+                <input id="guessInput" class="guess-input" type="number" min="1" max="100" placeholder="1-100" aria-label="Guess a number" />
+                <button id="guessBtn" class="guess-btn" type="button">Guess</button>
+              </div>
+
+              <div class="score-row">
+                <div id="guessCounter" class="score-value">0 tries</div>
+              </div>
+
+              <p id="guessStatus" class="status-text">A mystery number is waiting.</p>
+            </section>
           </div>
         </div>
-      </main>
+
+        <section class="panel leaderboard">
+          <h3>Arcade Leaderboard</h3>
+          <ul id="leaderboardList"></ul>
+        </section>
+
+        <section class="panel game-panel" style="margin-top: 18px;">
+          <div class="panel-header">
+            <h3>Battle Feed</h3>
+            <button id="resetAllBtn" class="mini-btn" type="button">Reset All</button>
+          </div>
+          <ul id="gameLogList" class="game-log"></ul>
+        </section>
+      </div>
     </div>
 
-    <script>
-      const title = document.getElementById('panelTitle');
-      const grid = document.getElementById('tileGrid');
-      const toggleTitle = () => {
-        const current = title.textContent.trim();
-        title.textContent = current === 'apps' ? 'games' : 'apps';
-        grid.classList.toggle('games-view', title.textContent === 'games');
-      };
+    <div id="toast" class="toast" aria-live="polite">Saved</div>
 
-      const brandBadge = document.querySelector('.brand-badge');
-      brandBadge.addEventListener('click', toggleTitle);
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
