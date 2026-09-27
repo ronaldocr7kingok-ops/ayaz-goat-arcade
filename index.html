@@ -354,30 +354,26 @@
       opacity: 0.8;
     }
 
-    /* Game gradients */
     .game-memory { background: linear-gradient(135deg, #67d6ff 0%, #4d5efb 100%); }
     .game-reaction { background: linear-gradient(135deg, #72e6ae 0%, #1ec98a 50%, #1486c8 100%); }
     .game-guess { background: linear-gradient(135deg, #ff8a61 0%, #ff5d6c 45%, #a92cc2 100%); }
     .game-click { background: linear-gradient(135deg, #d57dff 0%, #8b4dff 45%, #4b2d9a 100%); }
-    
+    .game-snake { background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%); }
+    .game-pong { background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%); }
+    .game-dino { background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); }
+    .game-tic { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%); }
+    .game-2048 { background: linear-gradient(135deg, #cddc39 0%, #afb42b 100%); }
+    .game-cookie { background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%); }
     .game-drift { background: linear-gradient(135deg, #ff6b6b 0%, #ff8e72 100%); }
     .game-boss { background: linear-gradient(135deg, #ffd93d 0%, #ff6b9d 100%); }
-    .game-cookie { background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%); }
     .game-flappy { background: linear-gradient(135deg, #4fc3f7 0%, #2196f3 100%); }
-    .game-snake { background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%); }
-    .game-tetris { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%); }
-    .game-pac { background: linear-gradient(135deg, #ffeb3b 0%, #fbc02d 100%); }
-    .game-dino { background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); }
-    .game-basketball { background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%); }
+    .game-racing { background: linear-gradient(135deg, #009688 0%, #00796b 100%); }
     .game-typing { background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); }
-    .game-piano { background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%); }
     .game-bubble { background: linear-gradient(135deg, #673ab7 0%, #512da8 100%); }
     .game-breakout { background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%); }
-    .game-racing { background: linear-gradient(135deg, #009688 0%, #00796b 100%); }
-    .game-2048 { background: linear-gradient(135deg, #cddc39 0%, #afb42b 100%); }
     .game-minesweeper { background: linear-gradient(135deg, #757575 0%, #424242 100%); }
+    .game-arcade { background: linear-gradient(135deg, #7e57c2 0%, #5e35b1 100%); }
 
-    /* App gradients */
     .app-youtube { background: linear-gradient(135deg, #ff3e37 0%, #e4292a 50%, #8c1111 100%); }
     .app-tiktok { background: linear-gradient(135deg, #111827 0%, #1e293b 26%, #00d4ff 55%, #ff2d83 100%); }
     .app-discord { background: linear-gradient(135deg, #5563f7 0%, #4050d0 100%); }
@@ -428,7 +424,7 @@
     }
 
     .modal-box {
-      width: min(720px, 92vw);
+      width: min(760px, 92vw);
       min-height: 340px;
       background: rgba(13, 20, 32, 0.96);
       border: 1px solid rgba(255,255,255,0.1);
@@ -552,6 +548,32 @@
       margin-top: 10px;
     }
 
+    canvas {
+      display: block;
+      margin: 16px auto;
+      background: #0c1d2d;
+      border: 2px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+    }
+
+    .mini-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .mini-btn {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
     @media (max-width: 860px) {
       .shell {
         width: 100vw;
@@ -586,7 +608,7 @@
       <div class="tab" data-section="apps">▣ Apps</div>
     </div>
 
-    <main>
+    <main class="main">
       <div class="quick-row">
         <span class="quick-item">✦</span>
         <span class="quick-item">＋</span>
@@ -655,87 +677,58 @@
   </div>
 
   <script>
-    // Game database with external iframe sources
     const GAMES = [
-      // Built-in games
-      { id: 'memory', name: 'Memory Match', icon: '🧩', class: 'game-memory', builtin: true },
-      { id: 'reaction', name: 'Reaction Test', icon: '⚡', class: 'game-reaction', builtin: true },
-      { id: 'guess', name: 'Secret Number', icon: '🎯', class: 'game-guess', builtin: true },
-      { id: 'click', name: 'Click Challenge', icon: '👆', class: 'game-click', builtin: true },
-      
-      // Racing & Driving
-      { name: 'Drift Hunters', icon: '🏎️', class: 'game-drift', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Racing Masters', icon: '🚗', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Moto X3M', icon: '🏍️', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Action/Boss Games
-      { name: 'Boss Survival', icon: '👹', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Combat Arena', icon: '⚔️', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Bullet Hell', icon: '💥', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Incremental/Clicker
-      { name: 'Cookie Clicker', icon: '🍪', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Idle Miner', icon: '⛏️', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Universal Paperclips', icon: '📎', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Classic Arcade
-      { name: 'Flappy Bird', icon: '🐦', class: 'game-flappy', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Snake', icon: '🐍', class: 'game-snake', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Tetris', icon: '⬜', class: 'game-tetris', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Pac-Man', icon: '👾', class: 'game-pac', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Breakout', icon: '🔶', class: 'game-breakout', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Puzzle
-      { name: 'Dino Chrome', icon: '🦖', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
-      { name: '2048', icon: '2️⃣', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Minesweeper', icon: '💣', class: 'game-minesweeper', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Match 3', icon: '🟪', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Sports
-      { name: 'Basketball Legends', icon: '🏀', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Football', icon: '🏈', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Mini Golf', icon: '⛳', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Music & Typing
-      { name: 'Piano Tiles', icon: '🎹', class: 'game-piano', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Typing Master', icon: '⌨️', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Rhythm Game', icon: '🎵', class: 'game-piano', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Adventure
-      { name: 'Super Mario', icon: '🍄', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Sonic Speed', icon: '💨', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Platformer Quest', icon: '🏃', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Strategy
-      { name: 'Tower Defense', icon: '🗼', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Chess', icon: '♟️', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Checkers', icon: '🔴', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Shooting
-      { name: 'Bubble Shooter', icon: '🔵', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Space Shooter', icon: '🚀', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Target Pro', icon: '🎯', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Logic
-      { name: 'Sudoku', icon: '🔢', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Wordle', icon: '📝', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Simon Says', icon: '🎨', class: 'game-reaction', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Casual
-      { name: 'Agar.io', icon: '⭕', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Slither.io', icon: '🎀', class: 'game-snake', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Bonk.io', icon: '🎾', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Krunker', icon: '🔫', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'FPS Unblocked', icon: '💣', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
-      
-      // Hidden gems
-      { name: 'Jump King', icon: '⬆️', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Vex', icon: '🏗️', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Happy Wheels', icon: '🚲', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
-      { name: 'Death Run', icon: '👻', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      { id: 'memory', name: 'Memory Match', icon: '🧩', className: 'game-memory', kind: 'local' },
+      { id: 'reaction', name: 'Reaction Test', icon: '⚡', className: 'game-reaction', kind: 'local' },
+      { id: 'guess', name: 'Secret Number', icon: '🎯', className: 'game-guess', kind: 'local' },
+      { id: 'click', name: 'Click Challenge', icon: '👆', className: 'game-click', kind: 'local' },
+      { id: 'snake', name: 'Snake', icon: '🐍', className: 'game-snake', kind: 'local' },
+      { id: 'pong', name: 'Pong', icon: '🏓', className: 'game-pong', kind: 'local' },
+      { id: 'dino', name: 'Dino Runner', icon: '🦖', className: 'game-dino', kind: 'local' },
+      { id: 'tic', name: 'Tic-Tac-Toe', icon: '❌', className: 'game-tic', kind: 'local' },
+      { id: '2048', name: '2048', icon: '2️⃣', className: 'game-2048', kind: 'local' },
+      { id: 'cookie', name: 'Cookie Clicker', icon: '🍪', className: 'game-cookie', kind: 'local' },
+      { id: 'drift', name: 'Drift Hunters', icon: '🏎️', className: 'game-drift', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'racing', name: 'Racing Masters', icon: '🚗', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'moto', name: 'Moto X3M', icon: '🏍️', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'boss', name: 'Boss Survival', icon: '👹', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'arena', name: 'Combat Arena', icon: '⚔️', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'bullet', name: 'Bullet Hell', icon: '💥', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'idle', name: 'Idle Miner', icon: '⛏️', className: 'game-cookie', kind: 'external', url: 'https://www.coolmathgames.com/' },
+      { id: 'clips', name: 'Paperclips', icon: '📎', className: 'game-cookie', kind: 'external', url: 'https://www.coolmathgames.com/' },
+      { id: 'flappy', name: 'Flappy Bird', icon: '🐦', className: 'game-flappy', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'pac', name: 'Pac-Man', icon: '👾', className: 'game-arcade', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'breakout', name: 'Breakout', icon: '🔶', className: 'game-breakout', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'match3', name: 'Match 3', icon: '🟪', className: 'game-bubble', kind: 'external', url: 'https://www.coolmathgames.com/' },
+      { id: 'basket', name: 'Basketball Legends', icon: '🏀', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'golf', name: 'Mini Golf', icon: '⛳', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'piano', name: 'Piano Tiles', icon: '🎹', className: 'game-typing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'typing', name: 'Typing Master', icon: '⌨️', className: 'game-typing', kind: 'external', url: 'https://www.typing.com/' },
+      { id: 'rhythm', name: 'Rhythm Game', icon: '🎵', className: 'game-typing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'mario', name: 'Super Mario', icon: '🍄', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'sonic', name: 'Sonic Speed', icon: '💨', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'quest', name: 'Platformer Quest', icon: '🏃', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'tower', name: 'Tower Defense', icon: '🗼', className: 'game-arcade', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'chess', name: 'Chess', icon: '♟️', className: 'game-arcade', kind: 'external', url: 'https://www.chess.com/' },
+      { id: 'checkers', name: 'Checkers', icon: '🔴', className: 'game-arcade', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'bubble', name: 'Bubble Shooter', icon: '🔵', className: 'game-bubble', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'space', name: 'Space Shooter', icon: '🚀', className: 'game-dino', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'target', name: 'Target Pro', icon: '🎯', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'sudoku', name: 'Sudoku', icon: '🔢', className: 'game-typing', kind: 'external', url: 'https://www.sudoku.com/' },
+      { id: 'wordle', name: 'Wordle', icon: '📝', className: 'game-typing', kind: 'external', url: 'https://www.nytimes.com/games/wordle/index.html' },
+      { id: 'simon', name: 'Simon Says', icon: '🎨', className: 'game-reaction', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'agar', name: 'Agar.io', icon: '⭕', className: 'game-bubble', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'slither', name: 'Slither.io', icon: '🎀', className: 'game-snake', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'bonk', name: 'Bonk.io', icon: '🎾', className: 'game-dino', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'krunker', name: 'Krunker', icon: '🔫', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'fps', name: 'FPS Unblocked', icon: '💣', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'jump', name: 'Jump King', icon: '⬆️', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'vex', name: 'Vex', icon: '🏗️', className: 'game-dino', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'wheels', name: 'Happy Wheels', icon: '🚲', className: 'game-racing', kind: 'external', url: 'https://www.crazygames.com/' },
+      { id: 'death', name: 'Death Run', icon: '👻', className: 'game-boss', kind: 'external', url: 'https://www.crazygames.com/' }
     ];
 
-    const toggleSections = () => {
+    function toggleSections() {
       const tabs = document.querySelectorAll('.tab');
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -758,18 +751,7 @@
           }
         });
       });
-    };
-
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim().toLowerCase();
-      const activeSection = document.querySelector('.section.active');
-      const cards = activeSection.querySelectorAll('.card');
-      cards.forEach(card => {
-        const txt = card.textContent.toLowerCase();
-        card.style.display = txt.includes(q) ? 'flex' : 'none';
-      });
-    });
+    }
 
     function createStars() {
       const container = document.getElementById('stars');
@@ -797,8 +779,8 @@
     document.getElementById('closeModal').addEventListener('click', () => {
       modal.classList.remove('open');
     });
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('open');
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) modal.classList.remove('open');
     });
 
     function openModal(title, html) {
@@ -810,21 +792,20 @@
     const games = {
       memory() {
         const symbols = ['🎮', '🎲', '🕹️', '👾', '🚀', '⭐', '🎯', '💎'];
-        let deck = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+        const deck = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
         let flipped = [];
         let matches = 0;
 
         const html = `
           <p class="result">Find all 8 pairs.</p>
           <div class="board">
-            ${deck.map((s, i) => `<button class="mem-card" data-index="${i}" type="button">?</button>`).join('')}
+            ${deck.map((symbol, index) => `<button class="mem-card" type="button" data-index="${index}">?</button>`).join('')}
           </div>
           <p class="result" id="matchText">Matches: 0/8</p>
         `;
         openModal('Memory Match', html);
 
-        const cards = [...document.querySelectorAll('.mem-card')];
-        cards.forEach((card, index) => {
+        document.querySelectorAll('.mem-card').forEach((card, index) => {
           card.addEventListener('click', () => {
             if (flipped.length >= 2) return;
             if (flipped.some(item => item.index === index)) return;
@@ -855,6 +836,7 @@
       reaction() {
         let ready = false;
         let startedAt = 0;
+
         openModal('Reaction Test', `
           <p class="result">Wait for green, then click.</p>
           <button class="big-btn" id="reactionButton" type="button">Start</button>
@@ -889,6 +871,7 @@
       guess() {
         const target = Math.floor(Math.random() * 100) + 1;
         let tries = 0;
+
         openModal('Secret Number', `
           <p class="result">Guess a number between 1 and 100.</p>
           <input class="input-number" id="guessInput" type="number" min="1" max="100" placeholder="1-100">
@@ -896,8 +879,7 @@
           <div class="result" id="guessResult">Tries: 0</div>
         `);
 
-        const btn = document.getElementById('guessBtn');
-        btn.addEventListener('click', () => {
+        document.getElementById('guessBtn').addEventListener('click', () => {
           const value = Number(document.getElementById('guessInput').value);
           tries++;
           if (value === target) {
@@ -912,6 +894,7 @@
         let score = 0;
         let ended = false;
         const endTime = Date.now() + 10000;
+
         openModal('Click Challenge', `
           <p class="result">Click as many times as possible in 10 seconds.</p>
           <button class="big-btn" id="clickBtn" type="button">0</button>
@@ -935,33 +918,463 @@
             clickBtn.disabled = true;
           }
         }, 100);
+      },
+
+      snake() {
+        const size = 18;
+        const board = 360;
+        const cell = board / size;
+        let snake = [{ x: 9, y: 9 }, { x: 8, y: 9 }, { x: 7, y: 9 }];
+        let direction = { x: 1, y: 0 };
+        let nextDirection = { x: 1, y: 0 };
+        let food = { x: 12, y: 7 };
+        let isGameOver = false;
+
+        openModal('Snake', `
+          <p class="result">Use arrow keys to grow and survive.</p>
+          <canvas id="snakeCanvas" width="360" height="360"></canvas>
+          <div class="result" id="snakeStatus">Score: 0</div>
+        `);
+
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('snakeStatus');
+
+        function placeFood() {
+          food = {
+            x: Math.floor(Math.random() * size),
+            y: Math.floor(Math.random() * size)
+          };
+          if (snake.some(seg => seg.x === food.x && seg.y === food.y)) placeFood();
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, board, board);
+          ctx.fillStyle = '#0a1324';
+          ctx.fillRect(0, 0, board, board);
+
+          for (let x = 0; x < size; x++) {
+            for (let y = 0; y < size; y++) {
+              ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+              ctx.strokeRect(x * cell, y * cell, cell, cell);
+            }
+          }
+
+          ctx.fillStyle = '#7af6ff';
+          snake.forEach(seg => ctx.fillRect(seg.x * cell + 2, seg.y * cell + 2, cell - 4, cell - 4));
+
+          ctx.fillStyle = '#ff6cc8';
+          ctx.fillRect(food.x * cell + 3, food.y * cell + 3, cell - 6, cell - 6);
+        }
+
+        function step() {
+          if (isGameOver) return;
+          direction = nextDirection;
+          const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+          if (head.x < 0 || head.y < 0 || head.x >= size || head.y >= size || snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+            isGameOver = true;
+            status.textContent = 'Game over! Press reset to try again.';
+            return;
+          }
+
+          snake.unshift(head);
+          if (head.x === food.x && head.y === food.y) {
+            placeFood();
+            status.textContent = `Score: ${snake.length - 3}`;
+          } else {
+            snake.pop();
+          }
+          draw();
+        }
+
+        document.addEventListener('keydown', (event) => {
+          const map = {
+            ArrowUp: { x: 0, y: -1 },
+            ArrowDown: { x: 0, y: 1 },
+            ArrowLeft: { x: -1, y: 0 },
+            ArrowRight: { x: 1, y: 0 }
+          };
+          const next = map[event.key];
+          if (!next) return;
+          if (direction.x + next.x === 0 && direction.y + next.y === 0) return;
+          nextDirection = next;
+        });
+
+        draw();
+        setInterval(step, 140);
+      },
+
+      pong() {
+        const width = 480;
+        const height = 300;
+        const paddleHeight = 70;
+        const paddleWidth = 12;
+        const ballSize = 12;
+        let leftY = height / 2 - paddleHeight / 2;
+        let rightY = height / 2 - paddleHeight / 2;
+        let ballX = width / 2;
+        let ballY = height / 2;
+        let ballVX = 4;
+        let ballVY = 2.5;
+        let leftScore = 0;
+        let rightScore = 0;
+
+        openModal('Pong', `
+          <canvas id="pongCanvas" width="480" height="300"></canvas>
+          <div class="result" id="pongScore">0 : 0</div>
+          <div class="mini-row">
+            <button class="mini-btn" type="button" id="pongReset">Reset</button>
+          </div>
+        `);
+
+        const canvas = document.getElementById('pongCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('pongScore');
+
+        function resetBall() {
+          ballX = width / 2;
+          ballY = height / 2;
+          ballVX = (Math.random() > 0.5 ? 1 : -1) * (4 + Math.random() * 1.5);
+          ballVY = (Math.random() - 0.5) * 5;
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#0d1b2a';
+          ctx.fillRect(0, 0, width, height);
+          ctx.fillStyle = '#eaf6ff';
+          ctx.fillRect(20, leftY, paddleWidth, paddleHeight);
+          ctx.fillRect(width - 32, rightY, paddleWidth, paddleHeight);
+          ctx.fillRect(ballX - ballSize / 2, ballY - ballSize / 2, ballSize, ballSize);
+
+          ctx.strokeStyle = '#8ecae6';
+          ctx.beginPath();
+          ctx.moveTo(width / 2, 0);
+          ctx.lineTo(width / 2, height);
+          ctx.stroke();
+        }
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'w') leftY = Math.max(0, leftY - 20);
+          if (event.key === 's') leftY = Math.min(height - paddleHeight, leftY + 20);
+          if (event.key === 'ArrowUp') rightY = Math.max(0, rightY - 20);
+          if (event.key === 'ArrowDown') rightY = Math.min(height - paddleHeight, rightY + 20);
+        });
+
+        function tick() {
+          ballX += ballVX;
+          ballY += ballVY;
+
+          if (ballY <= 0 || ballY >= height) ballVY *= -1;
+          if (ballX <= 32 && ballY >= leftY && ballY <= leftY + paddleHeight) {
+            ballVX = Math.abs(ballVX);
+          } else if (ballX >= width - 32 && ballY >= rightY && ballY <= rightY + paddleHeight) {
+            ballVX = -Math.abs(ballVX);
+          } else if (ballX < 0) {
+            rightScore += 1;
+            scoreEl.textContent = `${leftScore} : ${rightScore}`;
+            resetBall();
+          } else if (ballX > width) {
+            leftScore += 1;
+            scoreEl.textContent = `${leftScore} : ${rightScore}`;
+            resetBall();
+          }
+
+          draw();
+        }
+
+        document.getElementById('pongReset').addEventListener('click', () => {
+          leftScore = 0;
+          rightScore = 0;
+          scoreEl.textContent = '0 : 0';
+          resetBall();
+          draw();
+        });
+
+        resetBall();
+        draw();
+        setInterval(tick, 16);
+      },
+
+      dino() {
+        const width = 500;
+        const height = 180;
+        let dinoY = 120;
+        let velocity = 0;
+        let jumping = false;
+        let obstacles = [];
+        let score = 0;
+
+        openModal('Dino Runner', `
+          <canvas id="dinoCanvas" width="500" height="180"></canvas>
+          <div class="result" id="dinoStatus">Score: 0</div>
+        `);
+
+        const canvas = document.getElementById('dinoCanvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('dinoStatus');
+
+        function resetGame() {
+          dinoY = 120;
+          velocity = 0;
+          jumping = false;
+          obstacles = [];
+          score = 0;
+          status.textContent = 'Score: 0';
+        }
+
+        function jump() {
+          if (!jumping) {
+            jumping = true;
+            velocity = -10;
+          }
+        }
+
+        document.addEventListener('keydown', (event) => {
+          if (event.code === 'Space' || event.code === 'ArrowUp') jump();
+        });
+
+        function tick() {
+          velocity += 0.55;
+          dinoY += velocity;
+          if (dinoY >= 120) {
+            dinoY = 120;
+            velocity = 0;
+            jumping = false;
+          }
+
+          if (Math.random() < 0.02) {
+            obstacles.push({ x: width, width: 18 + Math.random() * 24, height: 20 + Math.random() * 40 });
+          }
+
+          for (const obs of obstacles) {
+            obs.x -= 4;
+            if (obs.x + obs.width < 0) {
+              obstacles.shift();
+              score += 1;
+              status.textContent = `Score: ${score}`;
+            }
+
+            const dinoX = 50;
+            const dinoH = 30;
+            if (dinoX + 30 > obs.x && dinoX < obs.x + obs.width && dinoY + dinoH > height - obs.height) {
+              resetGame();
+              return;
+            }
+          }
+
+          draw();
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#0c1d2d';
+          ctx.fillRect(0, 0, width, height);
+
+          ctx.fillStyle = '#7af6ff';
+          ctx.fillRect(50, dinoY, 28, 30);
+          ctx.fillStyle = '#ffb703';
+          obstacles.forEach(obs => ctx.fillRect(obs.x, height - obs.height, obs.width, obs.height));
+        }
+
+        resetGame();
+        draw();
+        setInterval(tick, 20);
+      },
+
+      tic() {
+        const board = Array(9).fill('');
+        let currentPlayer = 'X';
+        let winner = null;
+
+        openModal('Tic-Tac-Toe', `
+          <div class="board" id="ticBoard" style="grid-template-columns: repeat(3, 1fr); max-width: 300px;">
+            ${Array.from({ length: 9 }).map(() => '<button class="mini-btn" type="button" style="width: 80px; height: 80px; font-size: 2rem;"> </button>').join('')}
+          </div>
+          <div class="result" id="ticStatus">Player X's turn</div>
+        `);
+
+        const cells = [...document.querySelectorAll('#ticBoard button')];
+        const status = document.getElementById('ticStatus');
+
+        function checkWinner() {
+          const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+          for (const [a, b, c] of lines) {
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+          }
+          return null;
+        }
+
+        cells.forEach((cell, index) => {
+          cell.addEventListener('click', () => {
+            if (board[index] || winner) return;
+            board[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+            winner = checkWinner();
+            if (winner) {
+              status.textContent = `Player ${winner} wins!`;
+              return;
+            }
+            if (board.every(Boolean)) {
+              status.textContent = 'Draw game!';
+              return;
+            }
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            status.textContent = `Player ${currentPlayer}'s turn`;
+          });
+        });
+      },
+
+      2048() {
+        const size = 4;
+        let board = Array.from({ length: size }, () => Array(size).fill(0));
+
+        function emptyCells() {
+          const cells = [];
+          for (let y = 0; y < size; y++) {
+            for (let x = 0; x < size; x++) {
+              if (board[y][x] === 0) cells.push({ x, y });
+            }
+          }
+          return cells;
+        }
+
+        function addRandomTile() {
+          const cells = emptyCells();
+          if (!cells.length) return;
+          const cell = cells[Math.floor(Math.random() * cells.length)];
+          board[cell.y][cell.x] = Math.random() < 0.9 ? 2 : 4;
+        }
+
+        function slideLine(line) {
+          const values = line.filter(v => v !== 0);
+          const merged = [];
+          for (let i = 0; i < values.length; i++) {
+            if (values[i] === values[i + 1]) {
+              merged.push(values[i] * 2);
+              i += 1;
+            } else {
+              merged.push(values[i]);
+            }
+          }
+          while (merged.length < size) merged.push(0);
+          return merged;
+        }
+
+        function move(direction) {
+          const newBoard = Array.from({ length: size }, () => Array(size).fill(0));
+          if (direction === 'left' || direction === 'right') {
+            for (let y = 0; y < size; y++) {
+              const line = [...board[y]];
+              const moved = direction === 'left' ? slideLine(line) : slideLine([...line].reverse()).reverse();
+              newBoard[y] = moved;
+            }
+          }
+          if (direction === 'up' || direction === 'down') {
+            for (let x = 0; x < size; x++) {
+              const line = board.map(row => row[x]);
+              const moved = direction === 'up' ? slideLine(line) : slideLine([...line].reverse()).reverse();
+              for (let y = 0; y < size; y++) newBoard[y][x] = moved[y];
+            }
+          }
+          if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
+            board = newBoard;
+            addRandomTile();
+            render();
+          }
+        }
+
+        function render() {
+          const html = board.map(row => row.map(value => `<div style="display:flex;align-items:center;justify-content:center;height:62px;border-radius:10px;background:${value ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)'};font-size:1.4rem;font-weight:800;">${value || ''}</div>`).join('')).join('');
+          document.getElementById('game2048').innerHTML = html;
+        }
+
+        openModal('2048', `
+          <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;max-width:300px;margin:0 auto;padding:8px;border-radius:14px;background:rgba(255,255,255,0.05);" id="game2048"></div>
+          <div class="result">Use arrow keys to move.</div>
+        `);
+
+        addRandomTile();
+        addRandomTile();
+        render();
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') move('left');
+          if (event.key === 'ArrowRight') move('right');
+          if (event.key === 'ArrowUp') move('up');
+          if (event.key === 'ArrowDown') move('down');
+        });
+      },
+
+      cookie() {
+        let total = 0;
+        let cps = 0;
+
+        openModal('Cookie Clicker', `
+          <p class="result">Cookies: <span id="cookieTotal">0</span></p>
+          <button class="big-btn" type="button" id="cookieBtn" style="font-size:3rem;">🍪</button>
+          <div class="mini-row">
+            <button class="mini-btn" type="button" id="cookieUpgrade">Auto Clicker (+1 CPS)</button>
+          </div>
+        `);
+
+        const totalEl = document.getElementById('cookieTotal');
+        const btn = document.getElementById('cookieBtn');
+        const upgrade = document.getElementById('cookieUpgrade');
+
+        btn.addEventListener('click', () => {
+          total += 1;
+          totalEl.textContent = total;
+        });
+
+        upgrade.addEventListener('click', () => {
+          cps += 1;
+          totalEl.textContent = total;
+        });
+
+        setInterval(() => {
+          total += cps;
+          totalEl.textContent = total;
+        }, 1000);
       }
     };
 
     function renderGamesGrid() {
       const grid = document.getElementById('gamesGrid');
-      grid.innerHTML = GAMES.map(game => {
-        if (game.builtin) {
+      grid.innerHTML = GAMES.map((game) => {
+        if (game.kind === 'local') {
           return `
-            <button class="card ${game.class}" type="button" data-game="${game.id}">
+            <button class="card ${game.className}" type="button" data-game="${game.id}">
               <span class="icon">${game.icon}</span>
               <span class="label">${game.name}</span>
             </button>
           `;
-        } else {
-          return `
-            <a class="card ${game.class}" href="${game.url}" target="_blank" rel="noopener">
-              <span class="icon">${game.icon}</span>
-              <span class="label">${game.name}</span>
-            </a>
-          `;
         }
+        return `
+          <a class="card ${game.className}" href="${game.url}" target="_blank" rel="noopener">
+            <span class="icon">${game.icon}</span>
+            <span class="label">${game.name}</span>
+          </a>
+        `;
       }).join('');
 
-      document.querySelectorAll('[data-game]').forEach(btn => {
-        btn.addEventListener('click', () => games[btn.dataset.game]());
+      document.querySelectorAll('[data-game]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (games[button.dataset.game]) games[button.dataset.game]();
+        });
       });
     }
+
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      const cards = document.querySelectorAll('#gamesGrid .card');
+      cards.forEach((card) => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    });
 
     createStars();
     updateTime();
