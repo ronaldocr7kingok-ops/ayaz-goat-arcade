@@ -3,150 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#141b3d" />
-    <meta name="description" content="Ayaz da Goat Arcade — neon browser mini-games and player profiles." />
-    <title>Ayaz da Goat Arcade</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Ayaz Goat Arcade</title>
+    <meta
+      name="description"
+      content="Ayaz Goat Arcade - Blue and purple gaming portal with mini-games"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="page-shell">
-      <header class="topbar">
+      <header class="hero">
         <div class="brand-wrap">
-          <div class="brand-mark" aria-hidden="true">A</div>
-          <div>
-            <p class="eyebrow">Arcade Portal</p>
-            <h1>Ayaz da Goat Arcade</h1>
-          </div>
-        </div>
-
-        <div class="player-panel">
-          <label class="sr-only" for="playerNameInput">Player name</label>
-          <input id="playerNameInput" type="text" maxlength="18" value="Ayaz Rider" aria-label="Player name" />
-          <button id="saveNameBtn" class="mini-btn" type="button">Save</button>
-        </div>
-
-        <nav class="topnav" aria-label="Main navigation">
-          <a href="#games">Games</a>
-          <a href="#leaderboard">Leaderboard</a>
-          <a href="#feed">Feed</a>
-          <a href="#about">About</a>
-        </nav>
-
-        <div class="utility-actions">
-          <button class="icon-btn" id="soundBtn" type="button" aria-label="Toggle sound">🔊</button>
-          <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme">☀️</button>
+          <p class="eyebrow">PLAY • LEVEL UP • WIN</p>
+          <h1>Ayaz Goat Arcade</h1>
+          <p class="subtitle">
+            A neon gaming portal with fast action, classic vibes, and a little chaos.
+          </p>
+          <button class="cta">Start Playing</button>
         </div>
       </header>
 
-      <main>
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow accent">Blue &amp; purple challenge room</p>
-            <h2>Play, score, and beat the room.</h2>
-            <p>
-              Jump into a neon arcade with quick reflex games, memory puzzles,
-              and guessing challenges built for speedy wins and persistent bragging rights.
-            </p>
-            <div class="hero-actions">
-              <a href="#games" class="primary-btn">Start playing</a>
-              <button class="ghost-btn" id="resetAllBtn" type="button">Reset session</button>
-            </div>
-          </div>
+      <main class="content">
+        <section class="card-grid">
+          <article class="game-card">
+            <span class="icon">🎮</span>
+            <h2>Arcade Games</h2>
+            <p>Mini challenges, instant fun, and gameplay built for quick sessions.</p>
+          </article>
 
-          <div class="hero-panel">
-            <div class="panel-badge">Live Arcade · Profiles saved locally</div>
-            <div class="stats-grid">
-              <div>
-                <span>Player</span>
-                <strong id="playerNameLabel">Ayaz Rider</strong>
-              </div>
-              <div>
-                <span>Combo</span>
-                <strong id="comboMeter">x1</strong>
-              </div>
-              <div>
-                <span>Top score</span>
-                <strong id="topScore">0</strong>
-              </div>
-              <div>
-                <span>Best streak</span>
-                <strong id="bestStreak">0</strong>
-              </div>
-            </div>
-          </div>
-        </section>
+          <article class="game-card">
+            <span class="icon">⚡</span>
+            <h2>Fast Load</h2>
+            <p>Optimized for a clean start and smooth browsing on desktop and mobile.</p>
+          </article>
 
-        <section id="games" class="games-section">
-          <div class="section-heading">
-            <p class="eyebrow">Mini games</p>
-            <h3>Pick your challenge</h3>
-          </div>
-
-          <div class="games-grid">
-            <article class="game-card" aria-labelledby="memory-title">
-              <div class="game-header">
-                <span class="chip neon">Memory</span>
-                <span class="score-pill" id="memoryScore">0 pts</span>
-              </div>
-              <h4 id="memory-title">Match the board</h4>
-              <p id="memoryStatus" class="status-text">Find all 8 pairs with as few flips as possible.</p>
-              <div id="memoryBoard" class="memory-board" aria-live="polite"></div>
-              <button class="game-btn" id="memoryResetBtn" type="button">Shuffle board</button>
-            </article>
-
-            <article class="game-card" aria-labelledby="reaction-title">
-              <div class="game-header">
-                <span class="chip purple">Reflex</span>
-                <span class="score-pill" id="reactionScore">0 ms</span>
-              </div>
-              <h4 id="reaction-title">Reaction test</h4>
-              <button id="reactionBtn" class="reaction-btn" type="button">Press to start</button>
-              <p id="reactionStatus" class="status-text">Wait for the green signal.</p>
-            </article>
-
-            <article class="game-card" aria-labelledby="guess-title">
-              <div class="game-header">
-                <span class="chip blue">Guess</span>
-                <span class="score-pill" id="guessScore">0 tries</span>
-              </div>
-              <h4 id="guess-title">Secret number</h4>
-              <div class="guess-controls">
-                <input id="guessInput" type="number" min="1" max="100" inputmode="numeric" placeholder="1-100" aria-label="Guess a number from 1 to 100" />
-                <button id="guessBtn" class="game-btn" type="button">Guess</button>
-              </div>
-              <p id="guessStatus" class="status-text">A mystery number is waiting.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="leaderboard" class="leaderboard">
-          <div class="section-heading">
-            <p class="eyebrow">Hall of fame</p>
-            <h3>Your best runs</h3>
-          </div>
-          <ol id="leaderboardList" class="leader-list" aria-live="polite"></ol>
-        </section>
-
-        <section id="feed" class="game-feed">
-          <div class="section-heading">
-            <p class="eyebrow">Battle feed</p>
-            <h3>Latest activity</h3>
-          </div>
-          <ul id="gameLogList" class="game-log-list" aria-live="polite"></ul>
-        </section>
-
-        <section id="about" class="about-panel">
-          <p class="eyebrow">About the room</p>
-          <p>
-            Ayaz da Goat Arcade is a mini-gaming lounge with colorful challenges,
-            quick rounds, and persistent score tracking. The profile system keeps
-            your name and top stats saved in the browser for each visit.
-          </p>
+          <article class="game-card">
+            <span class="icon">🏆</span>
+            <h2>Score Chase</h2>
+            <p>Keep pushing higher scores and challenge your best run.</p>
+          </article>
         </section>
       </main>
     </div>
-
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="script.js"></script>
   </body>
 </html>

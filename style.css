@@ -1,0 +1,122 @@
+:root {
+  --bg-1: #0b1020;
+  --bg-2: #171b38;
+  --panel: rgba(19, 24, 48, 0.82);
+  --cyan: #7af6ff;
+  --purple: #a58bff;
+  --pink: #ff6cc8;
+  --text: #edf2ff;
+  --muted: #b6c1e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, var(--bg-2), var(--bg-1) 60%);
+  color: var(--text);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.page-shell {
+  width: min(1100px, 100%);
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(122, 246, 255, 0.08), rgba(165, 139, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(16, 14, 32, 0.5);
+  overflow: hidden;
+}
+
+.brand-wrap {
+  padding: 72px 40px;
+  text-align: center;
+}
+
+.eyebrow {
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-size: 0.78rem;
+  margin: 0 0 16px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 1;
+}
+
+.subtitle {
+  max-width: 700px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.cta {
+  margin-top: 28px;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 26px rgba(122, 246, 255, 0.25);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+}
+
+.content {
+  margin-top: 28px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.game-card {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+}
+
+.icon {
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+}
+
+.game-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
