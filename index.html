@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ayaz Arcade</title>
+  <title>Ayaz Arcade - 50+ Games</title>
   <style>
     :root {
       --bg-1: #050814;
@@ -29,7 +29,7 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #020711;
       color: var(--text);
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     body {
@@ -85,7 +85,7 @@
       position: relative;
       z-index: 1;
       width: min(1200px, 94vw);
-      height: min(86vh, 860px);
+      min-height: 86vh;
       margin: 3vh auto;
       background: rgba(7, 12, 22, 0.86);
       border: 1px solid var(--line);
@@ -186,7 +186,7 @@
     }
 
     .tab {
-      min-width: 200px;
+      min-width: 160px;
       height: 42px;
       border: 1px solid rgba(255,255,255,0.08);
       border-bottom: none;
@@ -200,6 +200,7 @@
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .tab.active {
@@ -218,6 +219,8 @@
       border-radius: 20px;
       padding: 22px 20px 18px;
       min-height: 600px;
+      max-height: 70vh;
+      overflow-y: auto;
     }
 
     .quick-row {
@@ -244,7 +247,7 @@
     .title {
       text-align: center;
       margin: 22px 0 6px;
-      font-size: clamp(3rem, 5vw, 5rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 900;
@@ -255,7 +258,7 @@
       text-align: center;
       margin: 0;
       color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 2rem);
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
       font-weight: 600;
     }
 
@@ -272,6 +275,10 @@
       font-weight: 700;
       font-size: 1.05rem;
       box-shadow: inset 0 0 16px rgba(255,255,255,0.02);
+    }
+
+    .search::placeholder {
+      color: rgba(255,255,255,0.4);
     }
 
     .section {
@@ -296,7 +303,7 @@
       width: min(920px, 100%);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 16px;
     }
 
@@ -331,11 +338,12 @@
     }
 
     .card .label {
-      font-size: 1.02rem;
+      font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.02em;
       z-index: 1;
       text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      text-align: center;
     }
 
     .card::before {
@@ -346,11 +354,30 @@
       opacity: 0.8;
     }
 
+    /* Game gradients */
     .game-memory { background: linear-gradient(135deg, #67d6ff 0%, #4d5efb 100%); }
     .game-reaction { background: linear-gradient(135deg, #72e6ae 0%, #1ec98a 50%, #1486c8 100%); }
     .game-guess { background: linear-gradient(135deg, #ff8a61 0%, #ff5d6c 45%, #a92cc2 100%); }
     .game-click { background: linear-gradient(135deg, #d57dff 0%, #8b4dff 45%, #4b2d9a 100%); }
+    
+    .game-drift { background: linear-gradient(135deg, #ff6b6b 0%, #ff8e72 100%); }
+    .game-boss { background: linear-gradient(135deg, #ffd93d 0%, #ff6b9d 100%); }
+    .game-cookie { background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%); }
+    .game-flappy { background: linear-gradient(135deg, #4fc3f7 0%, #2196f3 100%); }
+    .game-snake { background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%); }
+    .game-tetris { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%); }
+    .game-pac { background: linear-gradient(135deg, #ffeb3b 0%, #fbc02d 100%); }
+    .game-dino { background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); }
+    .game-basketball { background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%); }
+    .game-typing { background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); }
+    .game-piano { background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%); }
+    .game-bubble { background: linear-gradient(135deg, #673ab7 0%, #512da8 100%); }
+    .game-breakout { background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%); }
+    .game-racing { background: linear-gradient(135deg, #009688 0%, #00796b 100%); }
+    .game-2048 { background: linear-gradient(135deg, #cddc39 0%, #afb42b 100%); }
+    .game-minesweeper { background: linear-gradient(135deg, #757575 0%, #424242 100%); }
 
+    /* App gradients */
     .app-youtube { background: linear-gradient(135deg, #ff3e37 0%, #e4292a 50%, #8c1111 100%); }
     .app-tiktok { background: linear-gradient(135deg, #111827 0%, #1e293b 26%, #00d4ff 55%, #ff2d83 100%); }
     .app-discord { background: linear-gradient(135deg, #5563f7 0%, #4050d0 100%); }
@@ -533,10 +560,10 @@
         border-radius: 0;
       }
       .tabs { padding-left: 12px; padding-right: 12px; }
-      .tab { min-width: 160px; }
-      .grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .tab { min-width: 120px; }
+      .grid { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
       .orb { width: 120px; height: 120px; right: 4%; top: 12%; }
-      .title { font-size: 2.8rem; }
+      .title { font-size: 2rem; }
       .main { margin: 8px; padding: 16px 12px; }
       .status { display: none; }
     }
@@ -557,8 +584,6 @@
     <div class="tabs">
       <div class="tab active" data-section="games">🎮 Games</div>
       <div class="tab" data-section="apps">▣ Apps</div>
-      <div class="tab">⚡ Trending</div>
-      <div class="tab">🔥 Popular</div>
     </div>
 
     <main>
@@ -571,29 +596,12 @@
       </div>
 
       <h1 class="title" id="heading">games</h1>
-      <p class="subtitle" id="subtitle">loaded 224 games...</p>
+      <p class="subtitle" id="subtitle">loaded 50+ games...</p>
       <input class="search" id="search" type="text" placeholder="find what you want..." />
 
       <section class="section active" id="games-section">
         <div class="section-label">Your Games</div>
-        <div class="grid">
-          <button class="card game-memory" type="button" data-game="memory">
-            <span class="icon">🧩</span>
-            <span class="label">Memory Match</span>
-          </button>
-          <button class="card game-reaction" type="button" data-game="reaction">
-            <span class="icon">⚡</span>
-            <span class="label">Reaction Test</span>
-          </button>
-          <button class="card game-guess" type="button" data-game="guess">
-            <span class="icon">🎯</span>
-            <span class="label">Secret Number</span>
-          </button>
-          <button class="card game-click" type="button" data-game="click">
-            <span class="icon">👆</span>
-            <span class="label">Click Challenge</span>
-          </button>
-        </div>
+        <div class="grid" id="gamesGrid"></div>
       </section>
 
       <section class="section" id="apps-section">
@@ -647,6 +655,86 @@
   </div>
 
   <script>
+    // Game database with external iframe sources
+    const GAMES = [
+      // Built-in games
+      { id: 'memory', name: 'Memory Match', icon: '🧩', class: 'game-memory', builtin: true },
+      { id: 'reaction', name: 'Reaction Test', icon: '⚡', class: 'game-reaction', builtin: true },
+      { id: 'guess', name: 'Secret Number', icon: '🎯', class: 'game-guess', builtin: true },
+      { id: 'click', name: 'Click Challenge', icon: '👆', class: 'game-click', builtin: true },
+      
+      // Racing & Driving
+      { name: 'Drift Hunters', icon: '🏎️', class: 'game-drift', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Racing Masters', icon: '🚗', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Moto X3M', icon: '🏍️', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Action/Boss Games
+      { name: 'Boss Survival', icon: '👹', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Combat Arena', icon: '⚔️', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Bullet Hell', icon: '💥', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Incremental/Clicker
+      { name: 'Cookie Clicker', icon: '🍪', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Idle Miner', icon: '⛏️', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Universal Paperclips', icon: '📎', class: 'game-cookie', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Classic Arcade
+      { name: 'Flappy Bird', icon: '🐦', class: 'game-flappy', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Snake', icon: '🐍', class: 'game-snake', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Tetris', icon: '⬜', class: 'game-tetris', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Pac-Man', icon: '👾', class: 'game-pac', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Breakout', icon: '🔶', class: 'game-breakout', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Puzzle
+      { name: 'Dino Chrome', icon: '🦖', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
+      { name: '2048', icon: '2️⃣', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Minesweeper', icon: '💣', class: 'game-minesweeper', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Match 3', icon: '🟪', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Sports
+      { name: 'Basketball Legends', icon: '🏀', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Football', icon: '🏈', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Mini Golf', icon: '⛳', class: 'game-basketball', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Music & Typing
+      { name: 'Piano Tiles', icon: '🎹', class: 'game-piano', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Typing Master', icon: '⌨️', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Rhythm Game', icon: '🎵', class: 'game-piano', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Adventure
+      { name: 'Super Mario', icon: '🍄', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Sonic Speed', icon: '💨', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Platformer Quest', icon: '🏃', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Strategy
+      { name: 'Tower Defense', icon: '🗼', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Chess', icon: '♟️', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Checkers', icon: '🔴', class: 'game-2048', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Shooting
+      { name: 'Bubble Shooter', icon: '🔵', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Space Shooter', icon: '🚀', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Target Pro', icon: '🎯', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Logic
+      { name: 'Sudoku', icon: '🔢', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Wordle', icon: '📝', class: 'game-typing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Simon Says', icon: '🎨', class: 'game-reaction', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Casual
+      { name: 'Agar.io', icon: '⭕', class: 'game-bubble', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Slither.io', icon: '🎀', class: 'game-snake', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Bonk.io', icon: '🎾', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Krunker', icon: '🔫', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'FPS Unblocked', icon: '💣', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+      
+      // Hidden gems
+      { name: 'Jump King', icon: '⬆️', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Vex', icon: '🏗️', class: 'game-dino', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Happy Wheels', icon: '🚲', class: 'game-racing', url: 'https://math.canvas-lms.22web.org/' },
+      { name: 'Death Run', icon: '👻', class: 'game-boss', url: 'https://math.canvas-lms.22web.org/' },
+    ];
+
     const toggleSections = () => {
       const tabs = document.querySelectorAll('.tab');
       tabs.forEach(tab => {
@@ -663,7 +751,7 @@
           const subtitle = document.getElementById('subtitle');
           if (section === 'games') {
             heading.textContent = 'games';
-            subtitle.textContent = 'loaded 224 games...';
+            subtitle.textContent = 'loaded 50+ games...';
           } else if (section === 'apps') {
             heading.textContent = 'apps';
             subtitle.textContent = 'online tools and app launchers';
@@ -850,13 +938,35 @@
       }
     };
 
-    document.querySelectorAll('[data-game]').forEach(btn => {
-      btn.addEventListener('click', () => games[btn.dataset.game]());
-    });
+    function renderGamesGrid() {
+      const grid = document.getElementById('gamesGrid');
+      grid.innerHTML = GAMES.map(game => {
+        if (game.builtin) {
+          return `
+            <button class="card ${game.class}" type="button" data-game="${game.id}">
+              <span class="icon">${game.icon}</span>
+              <span class="label">${game.name}</span>
+            </button>
+          `;
+        } else {
+          return `
+            <a class="card ${game.class}" href="${game.url}" target="_blank" rel="noopener">
+              <span class="icon">${game.icon}</span>
+              <span class="label">${game.name}</span>
+            </a>
+          `;
+        }
+      }).join('');
+
+      document.querySelectorAll('[data-game]').forEach(btn => {
+        btn.addEventListener('click', () => games[btn.dataset.game]());
+      });
+    }
 
     createStars();
     updateTime();
     toggleSections();
+    renderGamesGrid();
     setInterval(updateTime, 60000);
   </script>
 </body>
