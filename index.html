@@ -3,21 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games Portal</title>
+    <title>Games</title>
     <style>
       :root {
-        --bg-0: #050b14;
-        --bg-1: #0b1420;
-        --bg-2: #111d2d;
-        --chrome: rgba(22,27,34,0.78);
-        --chrome-2: rgba(255,255,255,0.04);
-        --panel: rgba(20,28,38,0.62);
-        --panel-2: rgba(18,25,34,0.8);
-        --text: #edf5ff;
-        --muted: rgba(237,245,255,0.7);
-        --soft: rgba(255,255,255,0.06);
-        --soft-2: rgba(255,255,255,0.12);
-        --green: #96f0b0;
+        --bg-0: #00070d;
+        --bg-1: #07101a;
+        --bg-2: #111f2b;
+        --chrome: rgba(17,22,28,0.9);
+        --chrome-2: rgba(255,255,255,0.05);
+        --panel: rgba(20,28,38,0.7);
+        --text: #eff7ff;
+        --muted: rgba(239,247,255,0.7);
+        --soft: rgba(255,255,255,0.08);
+        --green: #9bf0b2;
       }
 
       * { box-sizing: border-box; }
@@ -35,146 +33,142 @@
         min-height: 100vh;
         display: grid;
         place-items: center;
-        background:
-          radial-gradient(circle at center, rgba(111, 125, 170, 0.10), transparent 34%),
-          linear-gradient(180deg, #000 0%, #070d16 100%);
+        background: radial-gradient(circle at center, rgba(123,142,190,0.12), transparent 36%), linear-gradient(180deg, #01070d, #050c17 100%);
       }
 
-      .frame {
-        width: min(92vw, 1180px);
-        height: min(90vh, 760px);
+      .screen {
+        width: min(92vw, 1200px);
+        height: min(88vh, 840px);
+        background: rgba(12,18,28,0.94);
         border-radius: 18px;
-        background: rgba(15, 21, 31, 0.92);
         border: 1px solid rgba(255,255,255,0.08);
-        overflow: hidden;
-        box-shadow: 0 22px 64px rgba(0,0,0,0.7);
         position: relative;
+        overflow: hidden;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.75);
       }
 
-      .frame::before {
+      .screen::before {
         content: "";
         position: absolute;
         inset: 0;
-        background:
-          radial-gradient(circle, rgba(255,255,255,0.28) 0.8px, transparent 1.1px) 0 0 / 18px 18px,
-          radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.4px) 9px 9px / 18px 18px;
-        opacity: 0.24;
         pointer-events: none;
+        background:
+          radial-gradient(circle, rgba(255,255,255,0.24) 0.8px, transparent 1.2px) 0 0 / 18px 18px,
+          radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.4px) 9px 9px / 18px 18px;
+        opacity: 0.22;
       }
 
-      .topbar {
+      .header {
         position: relative;
         z-index: 2;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        height: 74px;
+        gap: 10px;
+        height: 72px;
         padding: 12px 18px 10px;
-        background: rgba(31, 33, 38, 0.75);
-        border-bottom: 1px solid rgba(255,255,255,0.06);
+        background: rgba(25,28,34,0.76);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
       }
 
-      .status-left, .status-right {
+      .header-left, .header-right {
         display: flex;
         align-items: center;
         gap: 12px;
         width: 180px;
       }
 
-      .status-right {
-        justify-content: flex-end;
-      }
+      .header-right { justify-content: flex-end; }
 
       .time {
-        font-size: 1.03rem;
+        font-size: 1rem;
         font-weight: 700;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.04em;
         color: rgba(255,255,255,0.92);
       }
 
-      .back-btn {
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 5px 11px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .chip .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        display: block;
+      }
+
+      .nav-btn {
         width: 32px;
         height: 32px;
         border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.03);
         display: grid;
         place-items: center;
-        font-size: 1.7rem;
-        line-height: 1;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
         color: rgba(255,255,255,0.9);
+        font-size: 1.8rem;
+        line-height: 1;
       }
 
       .address {
         flex: 1;
-        max-width: 540px;
+        max-width: 560px;
         height: 42px;
         border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.06);
         background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.06);
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 0 12px;
-        color: rgba(255,255,255,0.8);
+        padding: 0 14px;
+        color: rgba(255,255,255,0.9);
         font-weight: 700;
       }
 
-      .address .icon {
+      .address .brand {
         font-size: 1rem;
       }
 
-      .address .text {
-        font-size: 1.05rem;
+      .address .url {
+        font-size: 1.03rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      .tiny-flag {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 5px 10px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.08);
-        font-size: 0.7rem;
-        font-weight: 700;
-      }
-
-      .tiny-flag .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--green);
-        display: inline-block;
-        margin-right: 6px;
-      }
-
-      .toolbar {
+      .tabs {
         position: relative;
         z-index: 2;
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 10px 22px 0;
+        gap: 12px;
+        padding: 10px 18px 0;
       }
 
       .tab {
         flex: 1;
-        max-width: 240px;
-        height: 40px;
+        max-width: 250px;
+        height: 38px;
         border-radius: 16px 16px 0 0;
-        border: 1px solid rgba(255,255,255,0.04);
         background: rgba(255,255,255,0.04);
-        color: rgba(255,255,255,0.78);
+        border: 1px solid rgba(255,255,255,0.04);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.95rem;
+        color: rgba(255,255,255,0.76);
+        font-size: 0.9rem;
         font-weight: 700;
         white-space: nowrap;
         overflow: hidden;
@@ -185,205 +179,208 @@
         background: rgba(255,255,255,0.08);
       }
 
-      .main {
+      .content {
         position: relative;
         z-index: 2;
-        margin: 8px 26px 18px;
-        border-radius: 18px;
-        background: rgba(16, 25, 35, 0.58);
+        margin: 12px 24px 20px;
+        background: rgba(15,24,34,0.64);
         border: 1px solid rgba(255,255,255,0.08);
-        height: calc(100% - 150px);
-        min-height: 530px;
-        padding: 20px 18px 18px;
+        border-radius: 18px;
+        height: calc(100% - 124px);
+        min-height: 580px;
+        padding: 18px 18px 8px;
       }
 
-      .quick-row {
+      .quick {
         display: flex;
-        justify-content: center;
         gap: 16px;
+        justify-content: center;
         margin-top: 8px;
       }
 
-      .quick-item {
+      .quick .item {
         width: 52px;
         height: 52px;
-        border-radius: 14px;
         display: grid;
         place-items: center;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.06);
-        font-size: 1.8rem;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.07);
+        font-size: 1.7rem;
       }
 
-      .title {
+      h1 {
+        margin: 26px 0 4px;
         text-align: center;
-        font-size: clamp(3rem, 3.8vw, 4.4rem);
-        letter-spacing: 0.02em;
+        font-size: clamp(2.8rem, 3.4vw, 5rem);
         font-weight: 900;
-        margin: 26px 0 8px;
+        letter-spacing: 0.02em;
+        line-height: 1;
       }
 
-      .subtitle {
+      .sub {
         text-align: center;
         color: rgba(255,255,255,0.72);
-        font-size: clamp(1.4rem, 2vw, 2.1rem);
-        font-weight: 500;
-        margin: 0;
+        font-size: clamp(1.2rem, 1.8vw, 2rem);
+        font-weight: 600;
+        margin: 0 0 12px;
       }
 
-      .search {
-        width: min(420px, 82%);
-        height: 54px;
+      .search-box {
+        width: min(440px, 84%);
+        height: 52px;
         border-radius: 18px;
-        margin: 22px auto 10px;
+        margin: 16px auto 0;
         background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.06);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgba(255,255,255,0.7);
-        font-weight: 700;
+        color: rgba(255,255,255,0.72);
         font-size: 1.05rem;
+        font-weight: 700;
       }
 
-      .grid {
-        width: min(760px, 90%);
+      .tiles {
+        width: min(770px, 90%);
         margin: 22px auto 0;
         display: grid;
-        grid-template-columns: repeat(5, minmax(122px, 1fr));
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
         gap: 14px 18px;
       }
 
       .tile {
-        height: 158px;
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.08);
         position: relative;
+        height: 150px;
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 12px 18px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 12px 20px rgba(0,0,0,0.18);
       }
 
-      .tile:nth-child(1) { background: linear-gradient(135deg, #9be87d, #7bbf43); }
-      .tile:nth-child(2) { background: linear-gradient(135deg, #f6d468, #f9b848); }
-      .tile:nth-child(3) { background: linear-gradient(135deg, #9b9bff, #6a7ef8); }
-      .tile:nth-child(4) { background: linear-gradient(135deg, #8bd5ff, #5aaef7); }
-      .tile:nth-child(5) { background: linear-gradient(135deg, #3ea7ff, #5c59ef); }
-      .tile:nth-child(6) { background: linear-gradient(135deg, #ffb36d, #ff7b5a); }
-      .tile:nth-child(7) { background: linear-gradient(135deg, #8db1ff, #5f6dff); }
-      .tile:nth-child(8) { background: linear-gradient(135deg, #ff7d71, #ff9b54); }
-      .tile:nth-child(9) { background: linear-gradient(135deg, #9ad1ff, #39a4ff); }
-      .tile:nth-child(10) { background: linear-gradient(135deg, #f1718d, #ff7d5f); }
+      .tile:nth-child(1) { background: linear-gradient(135deg, #a0ea79, #7dc95d); }
+      .tile:nth-child(2) { background: linear-gradient(135deg, #f0d76f, #f5b956); }
+      .tile:nth-child(3) { background: linear-gradient(135deg, #6887ff, #3e69ff); }
+      .tile:nth-child(4) { background: linear-gradient(135deg, #70d1ff, #4d8efb); }
+      .tile:nth-child(5) { background: linear-gradient(135deg, #3289ff, #5f62f8); }
+      .tile:nth-child(6) { background: linear-gradient(135deg, #ffb26b, #ff7b5d); }
+      .tile:nth-child(7) { background: linear-gradient(135deg, #8da4ff, #5d71ff); }
+      .tile:nth-child(8) { background: linear-gradient(135deg, #fb7c78, #ff9f5b); }
+      .tile:nth-child(9) { background: linear-gradient(135deg, #7ec6ff, #49a6ff); }
+      .tile:nth-child(10) { background: linear-gradient(135deg, #ff7a8d, #ff7a5f); }
 
-      .tile-inner {
+      .tile .inner {
         position: absolute;
         inset: 0;
         display: grid;
         place-items: center;
-        font-size: clamp(2.8rem, 3vw, 4rem);
-        font-weight: 900;
+        font-size: clamp(2.6rem, 3vw, 4rem);
         color: rgba(255,255,255,0.98);
-        text-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        text-shadow: 0 8px 20px rgba(0,0,0,0.2);
       }
 
-      .bot {
+      .footer {
         position: absolute;
         left: 50%;
-        bottom: 20px;
+        bottom: 22px;
         transform: translateX(-50%);
-        width: min(540px, 72%);
+        width: min(560px, 74%);
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        color: rgba(255,255,255,0.75);
+        align-items: center;
+        color: rgba(255,255,255,0.8);
       }
 
-      .online {
+      .count {
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
 
-      .set {
+      .icons {
         display: flex;
         align-items: center;
         gap: 10px;
       }
 
-      .set .round {
+      .icons .round {
         width: 34px;
         height: 34px;
+        border-radius: 50%;
         display: grid;
         place-items: center;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.05);
       }
 
-      @media (max-width: 880px) {
-        .frame { width: 100vw; height: 100vh; border-radius: 0; }
-        .grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
-        .toolbar { overflow-x: auto; }
-        .tab { min-width: 170px; }
+      @media (max-width: 860px) {
+        .screen {
+          width: 100vw;
+          height: 100vh;
+          border-radius: 0;
+        }
+        .tiles {
+          grid-template-columns: repeat(2, minmax(120px, 1fr));
+        }
       }
     </style>
   </head>
   <body>
-    <div class="frame">
-      <div class="topbar">
-        <div class="status-left">
+    <div class="screen">
+      <div class="header">
+        <div class="header-left">
           <div class="time">9:25 PM</div>
         </div>
 
-        <div class="back-btn">‹</div>
+        <div class="nav-btn">‹</div>
 
         <div class="address">
-          <span class="icon">◌</span>
-          <span class="text">anv-ims-lms.22web.org</span>
+          <span class="brand">◌</span>
+          <span class="url">anv-ims-lms.22web.org</span>
         </div>
 
-        <div class="status-right">
-          <div class="tiny-flag"><span class="dot"></span> 56%</div>
+        <div class="header-right">
+          <div class="chip"><span class="dot"></span>56%</div>
         </div>
       </div>
 
-      <div class="toolbar">
+      <div class="tabs">
         <div class="tab">Music Genres and C...</div>
         <div class="tab active">Google</div>
         <div class="tab">Study.com | Math</div>
         <div class="tab">IXL | Math, Language...</div>
       </div>
 
-      <div class="main">
-        <div class="quick-row">
-          <div class="quick-item">✦</div>
-          <div class="quick-item">＋</div>
-          <div class="quick-item">▣</div>
-          <div class="quick-item">⚙</div>
-          <div class="quick-item">＋</div>
+      <div class="content">
+        <div class="quick">
+          <div class="item">✦</div>
+          <div class="item">＋</div>
+          <div class="item">▣</div>
+          <div class="item">⚙</div>
+          <div class="item">＋</div>
         </div>
 
-        <h1 class="title">games</h1>
-        <p class="subtitle">loaded 224 games...</p>
+        <h1>games</h1>
+        <p class="sub">loaded 224 games...</p>
 
-        <div class="search">find what you want...</div>
+        <div class="search-box">find what you want...</div>
 
-        <div class="grid">
-          <div class="tile"><div class="tile-inner">🎮</div></div>
-          <div class="tile"><div class="tile-inner">🎯</div></div>
-          <div class="tile"><div class="tile-inner">🌌</div></div>
-          <div class="tile"><div class="tile-inner">🏔️</div></div>
-          <div class="tile"><div class="tile-inner">🚀</div></div>
+        <div class="tiles">
+          <div class="tile"><div class="inner">🎮</div></div>
+          <div class="tile"><div class="inner">🎯</div></div>
+          <div class="tile"><div class="inner">🌌</div></div>
+          <div class="tile"><div class="inner">🏔️</div></div>
+          <div class="tile"><div class="inner">🚀</div></div>
 
-          <div class="tile"><div class="tile-inner">🦕</div></div>
-          <div class="tile"><div class="tile-inner">🎲</div></div>
-          <div class="tile"><div class="tile-inner">👾</div></div>
-          <div class="tile"><div class="tile-inner">🧠</div></div>
-          <div class="tile"><div class="tile-inner">🎧</div></div>
+          <div class="tile"><div class="inner">🦕</div></div>
+          <div class="tile"><div class="inner">🎲</div></div>
+          <div class="tile"><div class="inner">👾</div></div>
+          <div class="tile"><div class="inner">🧠</div></div>
+          <div class="tile"><div class="inner">🎧</div></div>
         </div>
 
-        <div class="bot">
-          <div class="online">online users: 1455</div>
-          <div class="set">
+        <div class="footer">
+          <div class="count">online users: 1455</div>
+          <div class="icons">
             <div class="round">⚙</div>
             <div class="round">◌</div>
           </div>
